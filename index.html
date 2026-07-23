@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tobiloba - Data Analyst & Software Engineer</title>
+    <title>Tobiloba - Data Analyst & Backend/AI Engineer</title>
     <meta
       name="description"
-      content="Portfolio of Tobiloba, a passionate Data Analyst and Software Engineer specializing in data storytelling, automation, and full-stack development."
+      content="Portfolio of Tobiloba, a Data Analyst and Backend/AI Engineer specializing in Python, SQL, FastAPI, and RAG pipelines."
     />
     <meta
       name="keywords"
-      content="Tobiloba, Data Analyst, Software Engineer, Portfolio, Python, SQL, C#, JavaScript, Excel, Automation, Figma, Design"
+      content="Tobiloba, Data Analyst, Backend Engineer, AI Engineer, Portfolio, Python, SQL, FastAPI, RAG, C#, JavaScript, Excel, Automation"
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -90,11 +90,11 @@
         <a href="#" class="text-xl font-bold gradient-text">Tobiloba</a>
         <nav class="hidden md:flex items-center space-x-6">
           <a href="#about" class="hover:text-blue-400 transition">About</a>
+          <a href="#experience" class="hover:text-blue-400 transition"
+            >Experience</a
+          >
           <a href="#projects" class="hover:text-blue-400 transition"
             >Projects</a
-          >
-          <a href="#dashboard" class="hover:text-blue-400 transition"
-            >Designs</a
           >
           <a href="#skills" class="hover:text-blue-400 transition">Skills</a>
           <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
@@ -128,8 +128,8 @@
           <p
             class="text-lg md:text-2xl font-medium text-slate-400 max-w-3xl mx-auto"
           >
-            I turn messy data into meaningful stories and build software that
-            just works.
+            I build AI-powered backend systems and turn messy operational
+            data into automated reporting pipelines.
             <span
               id="easter-egg"
               class="cursor-pointer inline-block transform hover:scale-125 transition-transform duration-300"
@@ -240,6 +240,108 @@
         </div>
       </section>
 
+      <!-- Experience Section -->
+      <section id="experience" class="py-20 md:py-32 reveal">
+        <div class="container mx-auto px-6">
+          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
+            Experience
+          </h2>
+          <div class="max-w-3xl mx-auto space-y-8">
+            <!-- Trivera Labs -->
+            <div class="bg-slate-800 rounded-lg shadow-lg p-6 reveal">
+              <div
+                class="flex flex-col md:flex-row md:items-center md:justify-between mb-2"
+              >
+                <h3 class="font-bold text-xl text-white">
+                  Backend Software Engineer & Sprint Lead
+                </h3>
+                <span class="text-sm text-slate-400 font-medium"
+                  >Feb – May 2026</span
+                >
+              </div>
+              <p class="text-blue-400 font-medium mb-3">
+                Trivera Labs &middot; MSc Academic Practicum
+              </p>
+              <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside">
+                <li>
+                  Built a production RAG pipeline with FastAPI, hybrid BM25 +
+                  ChromaDB vector search, and RRF ranking.
+                </li>
+                <li>
+                  Integrated Qwen2.5 via Ollama and Kokoro TTS for a fully
+                  offline, self-hosted system.
+                </li>
+                <li>
+                  Delivered to external client NexusGuard across 3 Agile
+                  sprints as sprint lead on a 9-person team.
+                </li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span
+                  class="bg-teal-900 text-teal-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >FastAPI</span
+                >
+                <span
+                  class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >RAG</span
+                >
+                <span
+                  class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >ChromaDB</span
+                >
+                <span
+                  class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >Ollama</span
+                >
+              </div>
+            </div>
+            <!-- NAMA -->
+            <div
+              class="bg-slate-800 rounded-lg shadow-lg p-6 reveal"
+              style="transition-delay: 100ms"
+            >
+              <div
+                class="flex flex-col md:flex-row md:items-center md:justify-between mb-2"
+              >
+                <h3 class="font-bold text-xl text-white">Data Analyst</h3>
+                <span class="text-sm text-slate-400 font-medium"
+                  >Aug 2024 – Dec 2025</span
+                >
+              </div>
+              <p class="text-blue-400 font-medium mb-3">
+                Nigerian Airspace Management Agency (NAMA)
+              </p>
+              <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside">
+                <li>
+                  Automated KPI dashboards for senior management using Python
+                  and Google Apps Script, cutting manual reporting effort by
+                  30%.
+                </li>
+                <li>
+                  Reconciled 1,000+ flight records alongside Air Traffic
+                  Control to maintain data accuracy.
+                </li>
+                <li>Retained beyond NYSC service year based on performance.</li>
+              </ul>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span
+                  class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >Python</span
+                >
+                <span
+                  class="bg-yellow-900 text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >Google Apps Script</span
+                >
+                <span
+                  class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                  >KPI Dashboards</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Projects Section -->
       <section id="projects" class="py-20 md:py-32 reveal">
         <div class="container mx-auto px-6">
@@ -250,6 +352,198 @@
             class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
             style="perspective: 1000px"
           >
+            <!-- Job Application Bot -->
+            <div
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
+            >
+              <div
+                class="w-full h-48 bg-gradient-to-br from-blue-900 to-slate-900 flex items-center justify-center text-4xl"
+              >
+                🤖
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-white">
+                  Job Application Bot
+                </h3>
+                <p class="text-slate-400 text-sm mb-4">
+                  Automates LinkedIn and Indeed job applications with a
+                  monitoring dashboard, running on a scheduled pipeline.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Python</span
+                  >
+                  <span
+                    class="bg-teal-900 text-teal-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >FastAPI</span
+                  >
+                  <span
+                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Playwright</span
+                  >
+                  <span
+                    class="bg-blue-900 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Telegram</span
+                  >
+                  <span
+                    class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >GitHub Actions</span
+                  >
+                </div>
+                <a
+                  href="https://github.com/Xomie1?tab=repositories"
+                  target="_blank"
+                  class="font-semibold text-blue-400 hover:underline"
+                  >View on GitHub &rarr;</a
+                >
+              </div>
+            </div>
+            <!-- Real-Time TTS Streaming System -->
+            <div
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
+              style="transition-delay: 100ms"
+            >
+              <div
+                class="w-full h-48 bg-gradient-to-br from-purple-900 to-slate-900 flex items-center justify-center text-4xl"
+              >
+                🎙️
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-white">
+                  Real-Time TTS Streaming System
+                </h3>
+                <p class="text-slate-400 text-sm mb-4">
+                  Streams synthesized speech in real time over WebSockets,
+                  chunking audio for low-latency playback.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-teal-900 text-teal-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >FastAPI</span
+                  >
+                  <span
+                    class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >WebSockets</span
+                  >
+                  <span
+                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Qwen3-TTS</span
+                  >
+                </div>
+                <a
+                  href="https://github.com/Xomie1?tab=repositories"
+                  target="_blank"
+                  class="font-semibold text-blue-400 hover:underline"
+                  >View on GitHub &rarr;</a
+                >
+              </div>
+            </div>
+            <!-- CV Rewriter & Job Intelligence Tool -->
+            <div
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
+              style="transition-delay: 200ms"
+            >
+              <div
+                class="w-full h-48 bg-gradient-to-br from-emerald-900 to-slate-900 flex items-center justify-center text-4xl"
+              >
+                📄
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-white">
+                  CV Rewriter & Job Intelligence Tool
+                </h3>
+                <p class="text-slate-400 text-sm mb-4">
+                  AI-powered CV tailoring tool paired with a 66-company
+                  application tracker.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Python</span
+                  >
+                  <span
+                    class="bg-orange-900 text-orange-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Claude API</span
+                  >
+                </div>
+                <a
+                  href="https://github.com/Xomie1?tab=repositories"
+                  target="_blank"
+                  class="font-semibold text-blue-400 hover:underline"
+                  >View on GitHub &rarr;</a
+                >
+              </div>
+            </div>
+            <!-- RentMag -->
+            <div
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
+            >
+              <div
+                class="w-full h-48 bg-gradient-to-br from-amber-900 to-slate-900 flex items-center justify-center text-4xl"
+              >
+                🏠
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-white">RentMag</h3>
+                <p class="text-slate-400 text-sm mb-4">
+                  Cross-platform desktop application for managing rental
+                  properties, tenants, and payments.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >Python</span
+                  >
+                  <span
+                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >PyQt5</span
+                  >
+                </div>
+                <a
+                  href="https://github.com/Xomie1?tab=repositories"
+                  target="_blank"
+                  class="font-semibold text-blue-400 hover:underline"
+                  >View on GitHub &rarr;</a
+                >
+              </div>
+            </div>
+            <!-- MAUI Cross-Platform App -->
+            <div
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
+              style="transition-delay: 100ms"
+            >
+              <div
+                class="w-full h-48 bg-gradient-to-br from-indigo-900 to-slate-900 flex items-center justify-center text-4xl"
+              >
+                📱
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-white">
+                  MAUI Cross-Platform App
+                </h3>
+                <p class="text-slate-400 text-sm mb-4">
+                  Cross-platform app built on a shared C# codebase using
+                  .NET MAUI.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span
+                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >C#</span
+                  >
+                  <span
+                    class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
+                    >.NET MAUI</span
+                  >
+                </div>
+                <a
+                  href="https://github.com/Xomie1?tab=repositories"
+                  target="_blank"
+                  class="font-semibold text-blue-400 hover:underline"
+                  >View on GitHub &rarr;</a
+                >
+              </div>
+            </div>
             <!-- Project 1 -->
              <div
               class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
@@ -331,7 +625,7 @@
               style="transition-delay: 200ms"
             >
               <img
-                src="expenses.png"
+                src="img/expenses.png"
                 alt="Project 3 Screenshot"
                 class="w-full h-48 object-cover"
               />
@@ -366,7 +660,7 @@
               class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
             >
               <img
-                src="covid.jpg"
+                src="img/covid.jpg"
                 alt="Project 4 Screenshot"
                 class="w-full h-48 object-cover"
               />
@@ -457,156 +751,23 @@
                 >
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Dashboards Section -->
-      <section id="dashboard" class="py-20 md:py-32 bg-slate-800/50 reveal">
-        <div class="container mx-auto px-6">
-          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-            My Designs & Dashboards
-          </h2>
-          <div
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            style="perspective: 1000px"
-          >
-            <!-- Design 1 -->
+            <!-- Global Superstore Dashboard -->
             <div
-              class="project-card bg-slate-900 rounded-lg shadow-lg overflow-hidden reveal"
-            >
-              <img
-                src="img/footy.webp"
-                alt="Design Project 1"
-                class="w-full h object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Website Design Concept
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Designed the UI of a sneaker site with a modern, clean, and
-                  playful look.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-pink-900 text-pink-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Figma</span
-                  >
-                  <span
-                    class="bg-blue-900 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >UI/UX</span
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Design 2 -->
-            <div
-              class="project-card bg-slate-900 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <img
-                src="img/car.webp"
-                alt="Design Project 2"
-                class="w-full h-66 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Mobile App UI Mockup
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Designed an intuitive mobile app interface with focus on
-                  accessibility and smooth user flow.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Figma</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Prototyping</span
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Design 3 -->
-            <div
-              class="project-card bg-slate-900 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 200ms"
-            >
-              <img
-                src="img/Desktop - 1.png"
-                alt="Design Project 3"
-                class="w-full object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Poster & Branding Design
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Created playful poster designs.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-red-900 text-red-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Photoshop</span
-                  >
-                  <span
-                    class="bg-yellow-900 text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Branding</span
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Design 4 -->
-            <div
-              class="project-card bg-slate-900 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <img
-                src="img/tasktingle.webp"
-                alt="Design Project 4"
-                class="w-full h- object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Mobile App UI Mockup
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Designed an intuitive mobile app interface with focus on
-                  accessibility and smooth user flow.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Figma</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Prototyping</span
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Dashboard 1 -->
-            <div
-              class="project-card bg-slate-900 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
             >
               <img
                 src="img/Dashboard 1.png"
-                alt="Design Project 4"
-                class="w-full h- object-cover"
+                alt="Global Superstore customer cohort dashboard"
+                class="w-full h-48 object-cover"
               />
               <div class="p-6">
                 <h3 class="font-bold text-xl mb-2 text-white">
                   Global Superstore: Discovering Customer Cohorts
                 </h3>
-                <!-- <p class="text-slate-400 text-sm mb-4">
-                  Designed an intuitive mobile app interface with focus on
-                  accessibility and smooth user flow.
-                </p> -->
+                <p class="text-slate-400 text-sm mb-4">
+                  Interactive Tableau dashboard segmenting customers into
+                  cohorts to surface purchasing patterns and retention trends.
+                </p>
                 <div class="flex flex-wrap gap-2 mb-4">
                   <span
                     class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
@@ -619,24 +780,24 @@
                 </div>
               </div>
             </div>
-            <!-- Dashboard 2 -->
+            <!-- Airbnb Data Analysis Dashboard -->
             <div
-              class="project-card bg-slate-900 rounded-lg shadow-lg overflow-hidden reveal"
+              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
               style="transition-delay: 100ms"
             >
               <img
                 src="img/Dashboard 2.png"
-                alt="Design Project 4"
-                class="w-full h- object-cover"
+                alt="Airbnb data analysis dashboard"
+                class="w-full h-48 object-cover"
               />
               <div class="p-6">
                 <h3 class="font-bold text-xl mb-2 text-white">
-                  Full project on airbnb data analysis
+                  Airbnb Market Data Analysis
                 </h3>
-                <!-- <p class="text-slate-400 text-sm mb-4">
-                  Designed an intuitive mobile app interface with focus on
-                  accessibility and smooth user flow.
-                </p> -->
+                <p class="text-slate-400 text-sm mb-4">
+                  End-to-end Tableau analysis of Airbnb listings data,
+                  covering pricing, availability, and neighbourhood trends.
+                </p>
                 <div class="flex flex-wrap gap-2 mb-4">
                   <span
                     class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
@@ -707,18 +868,27 @@
                   >
                 </div>
               </div>
-              <!-- Design -->
+              <!-- AI/ML -->
               <div class="text-center">
-                <h3 class="text-xl font-bold text-white mb-4">Design</h3>
+                <h3 class="text-xl font-bold text-white mb-4">AI/ML</h3>
                 <div class="flex flex-wrap justify-center gap-4">
                   <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Figma</span
+                    >RAG Pipelines</span
                   >
                   <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Poster Design</span
+                    >LLM Integration</span
                   >
                   <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >UI/UX Principles</span
+                    >ChromaDB</span
+                  >
+                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
+                    >Ollama</span
+                  >
+                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
+                    >Whisper STT</span
+                  >
+                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
+                    >Kokoro TTS</span
                   >
                 </div>
               </div>
