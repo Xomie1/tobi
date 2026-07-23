@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,1041 +12,541 @@
       name="keywords"
       content="Tobiloba, Data Analyst, Backend Engineer, AI Engineer, Portfolio, Python, SQL, FastAPI, RAG, C#, JavaScript, Excel, Automation"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
   </head>
-  <body class="bg-slate-900 text-slate-300 antialiased">
-    <!-- Header -->
-    <header
-      id="header"
-      class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-sm shadow-sm transition-all duration-300"
-    >
-      <div
-        class="container mx-auto px-6 py-4 flex justify-between items-center"
-      >
-        <a href="#" class="text-xl font-bold gradient-text">Tobiloba</a>
-        <nav class="hidden md:flex items-center space-x-6">
-          <a href="#about" class="hover:text-blue-400 transition">About</a>
-          <a href="#experience" class="hover:text-blue-400 transition"
-            >Experience</a
-          >
-          <a href="#projects" class="hover:text-blue-400 transition"
-            >Projects</a
-          >
-          <a href="#skills" class="hover:text-blue-400 transition">Skills</a>
-          <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
-        </nav>
-        <div class="flex items-center space-x-4">
-          <a
-            href="https://drive.google.com/uc?export=download&id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh"
-            class="inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition"
-          >
-            Download CV
-          </a>
-          <button
-            id="mobile-menu-button"
-            type="button"
-            class="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-300 hover:text-blue-400 hover:bg-slate-800 transition"
-            aria-label="Toggle navigation menu"
-            aria-expanded="false"
-            aria-controls="mobile-menu"
-          >
-            <svg
-              id="menu-icon-open"
-              class="w-6 h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            <svg
-              id="menu-icon-close"
-              class="w-6 h-6 hidden"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
+  <body>
+    <!-- Nav -->
+    <header class="nav">
+      <div class="nav-brand">
+        <span class="status-dot"></span>
+        <span class="nav-name">TOBILOBA</span>
+        <span class="nav-pill">DATA_ANALYST.v2</span>
       </div>
-      <div
-        id="mobile-menu"
-        class="md:hidden hidden border-t border-slate-800 bg-slate-900/95 backdrop-blur-sm"
-      >
-        <nav class="flex flex-col px-6 py-4 space-y-1">
-          <a href="#about" class="py-2 hover:text-blue-400 transition">About</a>
-          <a href="#experience" class="py-2 hover:text-blue-400 transition"
-            >Experience</a
-          >
-          <a href="#projects" class="py-2 hover:text-blue-400 transition"
-            >Projects</a
-          >
-          <a href="#skills" class="py-2 hover:text-blue-400 transition">Skills</a>
-          <a href="#contact" class="py-2 hover:text-blue-400 transition">Contact</a>
-        </nav>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <span class="clock" id="clock">00:00:00</span>
+        <a
+          href="https://drive.google.com/uc?export=download&id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh"
+          class="btn btn-dark btn-sm"
+          >Download CV</a
+        >
+        <button
+          id="mobile-nav-toggle"
+          class="mobile-nav-toggle"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
     </header>
+    <nav class="mobile-menu" id="mobile-menu">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-    <main class="pt-24">
-      <!-- Hero Section -->
-      <section
-        id="hero"
-        class="container mx-auto px-6 py-20 md:py-32 text-center"
-      >
-        <div class="flex flex-col items-center">
-          <img
-            src="assets/img/profile/profile-pic.jpg"
-            alt="Tobiloba's Photo"
-            class="w-32 h-32 rounded-full mb-6 shadow-lg border-4 border-slate-800"
-          />
-          <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4">
-            Hi, I'm Tobiloba
-          </h1>
-          <p
-            class="text-lg md:text-2xl font-medium text-slate-400 max-w-3xl mx-auto"
-          >
-            I build AI-powered backend systems and turn messy operational
-            data into automated reporting pipelines.
-            <span
-              id="easter-egg"
-              class="cursor-pointer inline-block transform hover:scale-125 transition-transform duration-300"
-              >🚀</span
-            >
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div>
+          <div class="chip">
+            <span class="chip-dot"></span>
+            AVAILABLE FOR WORK
+          </div>
+          <h1>Hi, I'm Tobiloba —<br />I turn raw data into decisions.</h1>
+          <p class="hero-sub">
+            Data Analyst &amp; Backend/AI Engineer. I build AI-powered backend
+            systems and automated reporting pipelines that turn messy
+            operational data into clear, actionable dashboards.
           </p>
-          <div class="mt-8 flex justify-center space-x-6">
-            <a
-              href="https://github.com/Xomie1"
-              target="_blank"
-              class="text-slate-500 hover:text-blue-400 transition"
-              aria-label="GitHub"
-              ><svg
-                class="w-8 h-8"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"
-                  clip-rule="evenodd"
-                ></path></svg
-            ></a>
+          <div class="hero-actions">
+            <a href="mailto:tobiakindele30@gmail.com" class="btn btn-dark">Get in touch</a>
+            <a href="https://github.com/Xomie1" target="_blank" class="btn btn-outline">GitHub</a>
             <a
               href="https://www.linkedin.com/in/tobi-akindele-3643051a3/"
               target="_blank"
-              class="text-slate-500 hover:text-blue-400 transition"
-              aria-label="LinkedIn"
-              ><svg
-                class="w-8 h-8"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-                ></path></svg
-            ></a>
-            <a
-              href="https://dribbble.com/xomie1"
-              target="_blank"
-              class="text-slate-500 hover:text-blue-400 transition"
-              aria-label="Dribbble"
-              ><svg
-                class="w-8 h-8"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.29 0 .58-.02.86-.05-.12-.39-.23-.79-.32-1.21-.05-.22-.1-.45-.14-.68-.31-.11-.63-.23-.94-.37-.73-.34-1.42-.76-2.04-1.25-.62-.49-1.16-1.05-1.61-1.68-.89-1.25-1.44-2.76-1.52-4.38H12v2.21c0 .48.31.9.75 1.06 1.4.52 2.65 1.48 3.51 2.71.69.98 1.13 2.15 1.25 3.39.06.5.1 1 .14 1.5.03.39.04.79.04 1.19C17.52 22 22 17.52 22 12S17.52 2 12 2zm6.39 6.32c-.36.23-.74.42-1.15.57.88-1.73 1.34-3.64 1.34-5.63.26.54.49 1.1.68 1.68-.12.82-.36 1.6-.7 2.38zM12 4.04c.16 0 .32.02.48.03-1.14.7-2.11 1.75-2.77 2.97-.24.44-.45.9-.62 1.38-.41-1.21-.63-2.5-.63-3.83.91.24 1.86.45 2.85.45.23 0 .45-.02.69-.04zM8.13 8.3c.12.5.28 1 .49 1.48.61 1.42 1.54 2.63 2.68 3.58-.39.29-.81.54-1.25.75-.92.43-1.92.68-2.98.72.1-2.11.75-4.08 1.85-5.69.11-.16.22-.32.33-.49.01 0 .02-.01.02-.02C9.43 8.52 9.22 8.3 9 8.3h-.87z"
-                  clip-rule="evenodd"
-                /></svg
-            ></a>
-            <a
-              href="mailto:tobiakindele30@gmail.com"
-              class="text-slate-500 hover:text-blue-400 transition"
-              aria-label="Email"
-              ><svg
-                class="w-8 h-8"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M22 5.5H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1v-11a1 1 0 0 0-1-1zm-1.5 2.62-7.99 5.33a1 1 0 0 1-1.02 0l-7.99-5.33c-.01-.01.05-.1.08-.12h17.84c.03.02.09.11.08.12z"
-                /></svg
-            ></a>
+              class="btn btn-outline"
+              >LinkedIn</a
+            >
+          </div>
+        </div>
+        <div class="hero-card">
+          <img
+            src="assets/img/profile/profile-pic.jpg"
+            alt="Tobiloba's photo"
+            class="hero-photo"
+          />
+          <div class="hero-card-meta">
+            <span>ROLE: Data Analyst</span>
+            <span>STATUS: <span class="status-active">ACTIVE</span></span>
           </div>
         </div>
       </section>
 
-      <!-- About Section -->
-      <section id="about" class="py-20 md:py-32 bg-slate-800/50 reveal">
-        <div class="container mx-auto px-6">
-          <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4 gradient-text">About Me</h2>
-            <p class="text-slate-400 mb-4">
-              Hi, I’m <span class="font-semibold">Tobiloba</span> — a curious
-              mind exploring data, code, and design. I started by pulling
-              Excel sheets apart, which grew into automation projects and full
-              applications.
-            </p>
-            <p class="text-slate-400">
-              I love making ideas both functional and visually appealing. When
-              I’m not coding or designing, I’m usually diving into AI
-              research, financial markets, or finding new ways to tell stories
-              with data.
-            </p>
+      <!-- KPI row -->
+      <section class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Projects Shipped</div>
+          <div class="kpi-value">13</div>
+          <div class="kpi-delta">+3 this year</div>
+          <div class="kpi-bars">
+            <div class="kpi-bar" style="height: 30%"></div>
+            <div class="kpi-bar" style="height: 40%"></div>
+            <div class="kpi-bar" style="height: 50%"></div>
+            <div class="kpi-bar" style="height: 60%"></div>
+            <div class="kpi-bar" style="height: 80%"></div>
+            <div class="kpi-bar" style="height: 100%"></div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Records Reconciled</div>
+          <div class="kpi-value">1,000+</div>
+          <div class="kpi-delta">flight data</div>
+          <div class="kpi-bars">
+            <div class="kpi-bar" style="height: 20%"></div>
+            <div class="kpi-bar" style="height: 30%"></div>
+            <div class="kpi-bar" style="height: 40%"></div>
+            <div class="kpi-bar" style="height: 70%"></div>
+            <div class="kpi-bar" style="height: 90%"></div>
+            <div class="kpi-bar" style="height: 100%"></div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Reporting Effort Cut</div>
+          <div class="kpi-value">30%</div>
+          <div class="kpi-delta">manual &rarr; automated</div>
+          <div class="kpi-bars">
+            <div class="kpi-bar" style="height: 100%"></div>
+            <div class="kpi-bar" style="height: 80%"></div>
+            <div class="kpi-bar" style="height: 70%"></div>
+            <div class="kpi-bar" style="height: 60%"></div>
+            <div class="kpi-bar" style="height: 50%"></div>
+            <div class="kpi-bar" style="height: 40%"></div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Hours Saved / Week</div>
+          <div class="kpi-value">10+</div>
+          <div class="kpi-delta">via automation</div>
+          <div class="kpi-bars">
+            <div class="kpi-bar" style="height: 44%"></div>
+            <div class="kpi-bar" style="height: 56%"></div>
+            <div class="kpi-bar" style="height: 56%"></div>
+            <div class="kpi-bar" style="height: 78%"></div>
+            <div class="kpi-bar" style="height: 89%"></div>
+            <div class="kpi-bar" style="height: 100%"></div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Years in Data &amp; AI</div>
+          <div class="kpi-value">2+</div>
+          <div class="kpi-delta">and counting</div>
+          <div class="kpi-bars">
+            <div class="kpi-bar" style="height: 25%"></div>
+            <div class="kpi-bar" style="height: 38%"></div>
+            <div class="kpi-bar" style="height: 50%"></div>
+            <div class="kpi-bar" style="height: 63%"></div>
+            <div class="kpi-bar" style="height: 75%"></div>
+            <div class="kpi-bar" style="height: 100%"></div>
           </div>
         </div>
       </section>
 
-      <!-- Experience Section -->
-      <section id="experience" class="py-20 md:py-32 reveal">
-        <div class="container mx-auto px-6">
-          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-            Experience
-          </h2>
-          <div class="max-w-3xl mx-auto space-y-8">
-            <!-- Trivera Labs -->
-            <div class="bg-slate-800 rounded-lg shadow-lg p-6 reveal">
-              <div
-                class="flex flex-col md:flex-row md:items-center md:justify-between mb-2"
-              >
-                <h3 class="font-bold text-xl text-white">
-                  Backend Software Engineer & Sprint Lead
-                </h3>
-                <span class="text-sm text-slate-400 font-medium"
-                  >Feb – May 2026</span
-                >
-              </div>
-              <p class="text-blue-400 font-medium mb-3">
-                Trivera Labs &middot; MSc Academic Practicum
-              </p>
-              <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside">
-                <li>
-                  Built a production RAG pipeline with FastAPI, hybrid BM25 +
-                  ChromaDB vector search, and RRF ranking.
-                </li>
-                <li>
-                  Integrated Qwen2.5 via Ollama and Kokoro TTS for a fully
-                  offline, self-hosted system.
-                </li>
-                <li>
-                  Delivered to external client NexusGuard across 3 Agile
-                  sprints as sprint lead on a 9-person team.
-                </li>
-              </ul>
-              <div class="flex flex-wrap gap-2 mt-4">
-                <span
-                  class="bg-teal-900 text-teal-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >FastAPI</span
-                >
-                <span
-                  class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >RAG</span
-                >
-                <span
-                  class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >ChromaDB</span
-                >
-                <span
-                  class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >Ollama</span
-                >
-              </div>
-            </div>
-            <!-- NAMA -->
-            <div
-              class="bg-slate-800 rounded-lg shadow-lg p-6 reveal"
-              style="transition-delay: 100ms"
-            >
-              <div
-                class="flex flex-col md:flex-row md:items-center md:justify-between mb-2"
-              >
-                <h3 class="font-bold text-xl text-white">Data Analyst</h3>
-                <span class="text-sm text-slate-400 font-medium"
-                  >Aug 2024 – Dec 2025</span
-                >
-              </div>
-              <p class="text-blue-400 font-medium mb-3">
-                Nigerian Airspace Management Agency (NAMA)
-              </p>
-              <ul class="text-slate-400 text-sm space-y-2 list-disc list-inside">
-                <li>
-                  Automated KPI dashboards for senior management using Python
-                  and Google Apps Script, cutting manual reporting effort by
-                  30%.
-                </li>
-                <li>
-                  Reconciled 1,000+ flight records alongside Air Traffic
-                  Control to maintain data accuracy.
-                </li>
-                <li>Retained beyond NYSC service year based on performance.</li>
-              </ul>
-              <div class="flex flex-wrap gap-2 mt-4">
-                <span
-                  class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >Python</span
-                >
-                <span
-                  class="bg-yellow-900 text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >Google Apps Script</span
-                >
-                <span
-                  class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                  >KPI Dashboards</span
-                >
-              </div>
-            </div>
-          </div>
+      <!-- About -->
+      <section id="about" class="section about-grid">
+        <div>
+          <div class="eyebrow">// ABOUT</div>
+          <h2>Who I am</h2>
         </div>
-      </section>
-
-      <!-- Projects Section -->
-      <section id="projects" class="py-20 md:py-32 reveal">
-        <div class="container mx-auto px-6">
-          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-            My Projects
-          </h2>
-          <div
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            style="perspective: 1000px"
-          >
-            <!-- Job Application Bot -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-            >
-              <div
-                class="w-full h-48 bg-gradient-to-br from-blue-900 to-slate-900 flex items-center justify-center text-4xl"
-              >
-                🤖
-              </div>
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Job Application Bot
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Automates LinkedIn and Indeed job applications with a
-                  monitoring dashboard, running on a scheduled pipeline.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Python</span
-                  >
-                  <span
-                    class="bg-teal-900 text-teal-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >FastAPI</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Playwright</span
-                  >
-                  <span
-                    class="bg-blue-900 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Telegram</span
-                  >
-                  <span
-                    class="bg-slate-700 text-slate-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >GitHub Actions</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1?tab=repositories"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- Real-Time TTS Streaming System -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <div
-                class="w-full h-48 bg-gradient-to-br from-purple-900 to-slate-900 flex items-center justify-center text-4xl"
-              >
-                🎙️
-              </div>
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Real-Time TTS Streaming System
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Streams synthesized speech in real time over WebSockets,
-                  chunking audio for low-latency playback.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-teal-900 text-teal-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >FastAPI</span
-                  >
-                  <span
-                    class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >WebSockets</span
-                  >
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Qwen3-TTS</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1?tab=repositories"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- CV Rewriter & Job Intelligence Tool -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 200ms"
-            >
-              <div
-                class="w-full h-48 bg-gradient-to-br from-emerald-900 to-slate-900 flex items-center justify-center text-4xl"
-              >
-                📄
-              </div>
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  CV Rewriter & Job Intelligence Tool
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  AI-powered CV tailoring tool paired with a 66-company
-                  application tracker.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Python</span
-                  >
-                  <span
-                    class="bg-orange-900 text-orange-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Claude API</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1?tab=repositories"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- RentMag -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-            >
-              <div
-                class="w-full h-48 bg-gradient-to-br from-amber-900 to-slate-900 flex items-center justify-center text-4xl"
-              >
-                🏠
-              </div>
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">RentMag</h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Cross-platform desktop application for managing rental
-                  properties, tenants, and payments.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Python</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >PyQt5</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1?tab=repositories"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- MAUI Cross-Platform App -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <div
-                class="w-full h-48 bg-gradient-to-br from-indigo-900 to-slate-900 flex items-center justify-center text-4xl"
-              >
-                📱
-              </div>
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  MAUI Cross-Platform App
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Cross-platform app built on a shared C# codebase using
-                  .NET MAUI.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >C#</span
-                  >
-                  <span
-                    class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >.NET MAUI</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1?tab=repositories"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- Project 1 -->
-             <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-            >
-              <img
-                src="assets/img/projects/finance-tool.jpg"
-                alt="Project 1 Screenshot"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Finance Automation Tool
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Automated financial reporting from Excel to Google Sheets,
-                  saving 10+ hours of manual work weekly.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-blue-900 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Google Apps Script</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Excel</span
-                  >
-                  <span
-                    class="bg-yellow-900 text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Google Sheets</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1/Finance-Automation-Tool.git"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-             <!-- Project 2 -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <img
-                src="assets/img/projects/gas-flow.png"
-                alt="Project 2 Screenshot"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Gas Flow C# WinForms App
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Desktop application for calculating gas flow based on the AGA8
-                  standard for industrial engineering.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >C#</span
-                  >
-                  <span
-                    class="bg-indigo-900 text-indigo-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >.NET WinForms</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1/Gas-Flow-C-WinForms-App.git"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div> 
-            <!-- Project 3 -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 200ms"
-            >
-              <img
-                src="assets/img/projects/expense-tracker.png"
-                alt="Project 3 Screenshot"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Full-Stack Expense Tracker
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Web application to track personal expenses, built as a
-                  full-stack thesis project with user authentication.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-sky-900 text-sky-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Python</span
-                  >
-                  <span
-                    class="bg-emerald-900 text-emerald-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Django</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1/Expenses.git"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- Project 4 -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-            >
-              <img
-                src="assets/img/projects/covid-analysis.jpg"
-                alt="Project 4 Screenshot"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Covid-19 SQL Analysis
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  In-depth data exploration of COVID-19 datasets using advanced
-                  SQL queries to uncover trends.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >SQL Server</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1/CovidProject/blob/main/CovidProject.sql"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- Project 5 -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <img
-                src="assets/img/projects/nashville-housing.jpg"
-                alt="Project 5 Screenshot"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Nashville Housing SQL Cleaning
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Data cleaning project focused on standardizing and structuring
-                  raw housing data using SQL.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-gray-700 text-gray-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >SQL Server</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1/SQL-data-cleaning-project-queries/blob/main/Nashville%20Data%20Cleaning%20Project.sql"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- Project 6 -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 200ms"
-            >
-              <img
-                src="assets/img/projects/disease-outbreak.jpg"
-                alt="Project 6 Screenshot"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Disease Outbreak Trends — India (2024)
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Analyzed weekly IDSP reports to track outbreaks, uncover case
-                  and death trends, highlight high-risk regions, and measure
-                  severity using case fatality rates (CFRs).
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-yellow-900 text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Excel</span
-                  >
-                </div>
-                <a
-                  href="https://github.com/Xomie1/Outbreak-Analysis-from-IDSP-Weekly-Reports.git"
-                  target="_blank"
-                  class="font-semibold text-blue-400 hover:underline"
-                  >View on GitHub &rarr;</a
-                >
-              </div>
-            </div>
-            <!-- Global Superstore Dashboard -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-            >
-              <img
-                src="assets/img/dashboards/dashboard-1.png"
-                alt="Global Superstore customer cohort dashboard"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Global Superstore: Discovering Customer Cohorts
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  Interactive Tableau dashboard segmenting customers into
-                  cohorts to surface purchasing patterns and retention trends.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Tableau</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Dashboards</span
-                  >
-                </div>
-              </div>
-            </div>
-            <!-- Airbnb Data Analysis Dashboard -->
-            <div
-              class="project-card bg-slate-800 rounded-lg shadow-lg overflow-hidden reveal"
-              style="transition-delay: 100ms"
-            >
-              <img
-                src="assets/img/dashboards/dashboard-2.png"
-                alt="Airbnb data analysis dashboard"
-                class="w-full h-48 object-cover"
-              />
-              <div class="p-6">
-                <h3 class="font-bold text-xl mb-2 text-white">
-                  Airbnb Market Data Analysis
-                </h3>
-                <p class="text-slate-400 text-sm mb-4">
-                  End-to-end Tableau analysis of Airbnb listings data,
-                  covering pricing, availability, and neighbourhood trends.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span
-                    class="bg-purple-900 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Tableau</span
-                  >
-                  <span
-                    class="bg-green-900 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full"
-                    >Dashboards</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Skills Section -->
-      <section id="skills" class="py-20 md:py-32 bg-slate-800/50 reveal">
-        <div class="container mx-auto px-6">
-          <h2 class="text-3xl font-bold text-center mb-12 gradient-text">
-            Skills & Tools
-          </h2>
-          <div class="max-w-4xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-              <!-- Data & Automation -->
-              <div class="text-center">
-                <h3 class="text-xl font-bold text-white mb-4">
-                  Data & Automation
-                </h3>
-                <div class="flex flex-wrap justify-center gap-4">
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Python</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >SQL</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Excel</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Tableau</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Pandas</span
-                  >
-                </div>
-              </div>
-              <!-- Software Engineering -->
-              <div class="text-center">
-                <h3 class="text-xl font-bold text-white mb-4">
-                  Software Engineering
-                </h3>
-                <div class="flex flex-wrap justify-center gap-4">
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >JavaScript</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Google Apps Script</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >C# / .NET</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >HTML & CSS</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Git & GitHub</span
-                  >
-                </div>
-              </div>
-              <!-- AI/ML -->
-              <div class="text-center">
-                <h3 class="text-xl font-bold text-white mb-4">AI/ML</h3>
-                <div class="flex flex-wrap justify-center gap-4">
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >RAG Pipelines</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >LLM Integration</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >ChromaDB</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Ollama</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Whisper STT</span
-                  >
-                  <span class="bg-slate-700 p-3 rounded-lg text-sm font-medium"
-                    >Kokoro TTS</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contact" class="py-20 md:py-32 reveal">
-        <div class="container mx-auto px-6 text-center">
-          <h2 class="text-3xl font-bold mb-4 gradient-text">Get In Touch</h2>
-          <p class="max-w-2xl mx-auto text-slate-400 mb-10">
-            I'm always open to discussing new projects, creative ideas, or
-            opportunities to be part of an amazing team. Feel free to reach out!
+        <div>
+          <p>
+            I'm a curious mind exploring data, code, and design. I started by
+            pulling Excel sheets apart, which grew into automation projects
+            and full applications.
           </p>
-          <a
-            href="mailto:tobiakindele30@gmail.com"
-            class="inline-block px-8 py-4 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition"
-          >
-            Say Hello
-          </a>
+          <p>
+            I love making ideas both functional and visually appealing. When
+            I'm not coding or designing, I'm diving into AI research,
+            financial markets, or finding new ways to tell stories with data.
+          </p>
+          <div class="tag-row">
+            <span class="tag-pill">Data Analysis</span>
+            <span class="tag-pill">Automation</span>
+            <span class="tag-pill">AI / RAG Pipelines</span>
+            <span class="tag-pill">Data Storytelling</span>
+          </div>
         </div>
+      </section>
+
+      <!-- Experience -->
+      <section id="experience" class="section">
+        <div class="eyebrow">// EXPERIENCE_LOG</div>
+        <h2>Where I've worked</h2>
+        <div class="timeline" style="margin-top: 32px">
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-head">
+              <h3>Backend Software Engineer &amp; Sprint Lead</h3>
+              <span class="timeline-dates">Feb – May 2026</span>
+            </div>
+            <div class="timeline-company">Trivera Labs &middot; MSc Academic Practicum</div>
+            <ul>
+              <li>
+                Built a production RAG pipeline with FastAPI, hybrid BM25 +
+                ChromaDB vector search, and RRF ranking.
+              </li>
+              <li>
+                Integrated Qwen2.5 via Ollama and Kokoro TTS for a fully
+                offline, self-hosted system.
+              </li>
+              <li>
+                Delivered to external client NexusGuard across 3 Agile
+                sprints as sprint lead on a 9-person team.
+              </li>
+            </ul>
+            <div class="mono-tag-row">
+              <span class="mono-tag">FastAPI</span>
+              <span class="mono-tag">RAG</span>
+              <span class="mono-tag">ChromaDB</span>
+              <span class="mono-tag">Ollama</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-head">
+              <h3>Data Analyst</h3>
+              <span class="timeline-dates">Aug 2024 – Dec 2025</span>
+            </div>
+            <div class="timeline-company">Nigerian Airspace Management Agency (NAMA)</div>
+            <ul>
+              <li>
+                Automated KPI dashboards for senior management using Python
+                and Google Apps Script, cutting manual reporting effort by
+                30%.
+              </li>
+              <li>
+                Reconciled 1,000+ flight records alongside Air Traffic
+                Control to maintain data accuracy.
+              </li>
+              <li>Retained beyond NYSC service year based on performance.</li>
+            </ul>
+            <div class="mono-tag-row">
+              <span class="mono-tag">Python</span>
+              <span class="mono-tag">Google Apps Script</span>
+              <span class="mono-tag">KPI Dashboards</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects" class="section">
+        <div class="projects-head">
+          <div>
+            <div class="eyebrow">// PROJECTS (13)</div>
+            <h2>What I've built</h2>
+          </div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-filter="All">All</button>
+            <button class="filter-chip" data-filter="AI">AI</button>
+            <button class="filter-chip" data-filter="Automation">Automation</button>
+            <button class="filter-chip" data-filter="SQL/Data">SQL/Data</button>
+            <button class="filter-chip" data-filter="Dashboards">Dashboards</button>
+            <button class="filter-chip" data-filter="Apps">Apps</button>
+          </div>
+        </div>
+        <div class="project-grid">
+          <div class="project-card" data-cats="Automation,AI">
+            <div class="project-icon">🤖</div>
+            <h3>Job Application Bot</h3>
+            <p>
+              Automates LinkedIn and Indeed job applications with a
+              monitoring dashboard, running on a scheduled pipeline.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">FastAPI</span>
+              <span class="project-tag">Playwright</span>
+            </div>
+            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="AI">
+            <img src="assets/img/projects/tts-streaming.png" alt="Real-Time TTS Streaming System" class="project-shot" />
+            <div class="project-icon">🎙️</div>
+            <h3>Real-Time TTS Streaming System</h3>
+            <p>
+              Streams synthesized speech in real time over WebSockets,
+              chunking audio for low-latency playback.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">FastAPI</span>
+              <span class="project-tag">WebSockets</span>
+              <span class="project-tag">Qwen3-TTS</span>
+            </div>
+            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="AI,Automation">
+            <div class="project-icon">📄</div>
+            <h3>CV Rewriter &amp; Job Intelligence Tool</h3>
+            <p>
+              AI-powered CV tailoring tool paired with a 66-company
+              application tracker.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Claude API</span>
+            </div>
+            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="Apps">
+            <img src="assets/img/projects/rentmag.png" alt="RentMag" class="project-shot" />
+            <div class="project-icon">🏠</div>
+            <h3>RentMag</h3>
+            <p>
+              Cross-platform desktop application for managing rental
+              properties, tenants, and payments.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">PyQt5</span>
+            </div>
+            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="Apps">
+            <div class="project-icon">📱</div>
+            <h3>MAUI Cross-Platform App</h3>
+            <p>
+              Cross-platform app built on a shared C# codebase using .NET
+              MAUI.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">C#</span>
+              <span class="project-tag">.NET MAUI</span>
+            </div>
+            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="Automation">
+            <div class="project-icon">💰</div>
+            <h3>Finance Automation Tool</h3>
+            <p>
+              Automated financial reporting from Excel to Google Sheets,
+              saving 10+ hours of manual work weekly.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Apps Script</span>
+              <span class="project-tag">Excel</span>
+            </div>
+            <a
+              href="https://github.com/Xomie1/Finance-Automation-Tool.git"
+              target="_blank"
+              class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="Apps">
+            <div class="project-icon">⛽</div>
+            <h3>Gas Flow C# WinForms App</h3>
+            <p>
+              Desktop application for calculating gas flow based on the AGA8
+              standard for industrial engineering.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">C#</span>
+              <span class="project-tag">WinForms</span>
+            </div>
+            <a
+              href="https://github.com/Xomie1/Gas-Flow-C-WinForms-App.git"
+              target="_blank"
+              class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="Apps">
+            <div class="project-icon">💸</div>
+            <h3>Full-Stack Expense Tracker</h3>
+            <p>
+              Web application to track personal expenses, built as a
+              full-stack thesis project with user authentication.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Django</span>
+            </div>
+            <a href="https://github.com/Xomie1/Expenses.git" target="_blank" class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="SQL/Data">
+            <div class="project-icon">🦠</div>
+            <h3>Covid-19 SQL Analysis</h3>
+            <p>
+              In-depth data exploration of COVID-19 datasets using advanced
+              SQL queries to uncover trends.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">SQL</span>
+            </div>
+            <a
+              href="https://github.com/Xomie1/CovidProject/blob/main/CovidProject.sql"
+              target="_blank"
+              class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="SQL/Data">
+            <div class="project-icon">🏘️</div>
+            <h3>Nashville Housing SQL Cleaning</h3>
+            <p>
+              Data cleaning project focused on standardizing and structuring
+              raw housing data using SQL.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">SQL</span>
+            </div>
+            <a
+              href="https://github.com/Xomie1/SQL-data-cleaning-project-queries/blob/main/Nashville%20Data%20Cleaning%20Project.sql"
+              target="_blank"
+              class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="SQL/Data">
+            <div class="project-icon">📊</div>
+            <h3>Disease Outbreak Trends — India (2024)</h3>
+            <p>
+              Analyzed weekly IDSP reports to track outbreaks, uncover case
+              and death trends, and measure severity using case fatality
+              rates.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Excel</span>
+            </div>
+            <a
+              href="https://github.com/Xomie1/Outbreak-Analysis-from-IDSP-Weekly-Reports.git"
+              target="_blank"
+              class="project-link"
+              >View on GitHub &rarr;</a
+            >
+          </div>
+          <div class="project-card" data-cats="Dashboards">
+            <img src="assets/img/dashboards/dashboard-1.png" alt="Global Superstore customer cohort dashboard" class="project-shot" />
+            <div class="project-icon">🛒</div>
+            <h3>Global Superstore: Customer Cohorts</h3>
+            <p>
+              Interactive Tableau dashboard segmenting customers into
+              cohorts to surface purchasing patterns and retention trends.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Tableau</span>
+            </div>
+          </div>
+          <div class="project-card" data-cats="Dashboards">
+            <img src="assets/img/dashboards/dashboard-2.png" alt="Airbnb market data analysis dashboard" class="project-shot" />
+            <div class="project-icon">🏡</div>
+            <h3>Airbnb Market Data Analysis</h3>
+            <p>
+              End-to-end Tableau analysis of Airbnb listings data, covering
+              pricing, availability, and neighbourhood trends.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Tableau</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section id="skills" class="section">
+        <div class="eyebrow">// SKILLS_&amp;_TOOLS</div>
+        <h2>What I work with</h2>
+        <div class="skills-grid" style="margin-top: 32px">
+          <div class="skill-card">
+            <h3>Data &amp; Automation</h3>
+            <div class="skill-pills">
+              <span class="skill-pill">Python</span>
+              <span class="skill-pill">SQL</span>
+              <span class="skill-pill">Excel</span>
+              <span class="skill-pill">Tableau</span>
+              <span class="skill-pill">Pandas</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h3>Software Engineering</h3>
+            <div class="skill-pills">
+              <span class="skill-pill">JavaScript</span>
+              <span class="skill-pill">Google Apps Script</span>
+              <span class="skill-pill">C# / .NET</span>
+              <span class="skill-pill">HTML &amp; CSS</span>
+              <span class="skill-pill">Git &amp; GitHub</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <h3>AI / ML</h3>
+            <div class="skill-pills">
+              <span class="skill-pill">RAG Pipelines</span>
+              <span class="skill-pill">LLM Integration</span>
+              <span class="skill-pill">ChromaDB</span>
+              <span class="skill-pill">Ollama</span>
+              <span class="skill-pill">Whisper STT</span>
+              <span class="skill-pill">Kokoro TTS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="section-contact">
+        <div class="contact-panel">
+          <div>
+            <div class="contact-eyebrow">// GET_IN_TOUCH</div>
+            <h2>Let's work together.</h2>
+            <p>
+              I'm always open to discussing new projects, creative ideas, or
+              opportunities to be part of an amazing team.
+            </p>
+            <a href="mailto:tobiakindele30@gmail.com" class="btn" style="background: #fff; color: var(--ink); font-weight: 700; padding: 14px 26px"
+              >Say Hello</a
+            >
+          </div>
+          <div class="contact-links">
+            <a href="mailto:tobiakindele30@gmail.com">tobiakindele30@gmail.com</a>
+            <a href="https://github.com/Xomie1" target="_blank">github.com/Xomie1</a>
+            <a href="https://www.linkedin.com/in/tobi-akindele-3643051a3/" target="_blank"
+              >linkedin.com/in/tobi-akindele</a
+            >
+            <a href="https://dribbble.com/xomie1" target="_blank">dribbble.com/xomie1</a>
+          </div>
+        </div>
+        <div class="footer-note">&copy; <span id="year"></span> Tobiloba. All Rights Reserved.</div>
       </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800">
-      <div class="container mx-auto px-6 py-8 text-center text-slate-400">
-        <div class="mb-4 flex justify-center space-x-6">
-          <a
-            href="https://github.com/Xomie1"
-            target="_blank"
-            class="text-slate-500 hover:text-blue-400 transition"
-            aria-label="GitHub"
-            ><svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"
-                clip-rule="evenodd"
-              ></path></svg
-          ></a>
-          <a
-            href="https://www.linkedin.com/in/tobi-akindele-3643051a3/"
-            target="_blank"
-            class="text-slate-500 hover:text-blue-400 transition"
-            aria-label="LinkedIn"
-            ><svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-              ></path></svg
-          ></a>
-          <a
-            href="https://dribbble.com/xomie1"
-            target="_blank"
-            class="text-slate-500 hover:text-blue-400 transition"
-            aria-label="Dribbble"
-            ><svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c.29 0 .58-.02.86-.05-.12-.39-.23-.79-.32-1.21-.05-.22-.1-.45-.14-.68-.31-.11-.63-.23-.94-.37-.73-.34-1.42-.76-2.04-1.25-.62-.49-1.16-1.05-1.61-1.68-.89-1.25-1.44-2.76-1.52-4.38H12v2.21c0 .48.31.9.75 1.06 1.4.52 2.65 1.48 3.51 2.71.69.98 1.13 2.15 1.25 3.39.06.5.1 1 .14 1.5.03.39.04.79.04 1.19C17.52 22 22 17.52 22 12S17.52 2 12 2zm6.39 6.32c-.36.23-.74.42-1.15.57.88-1.73 1.34-3.64 1.34-5.63.26.54.49 1.1.68 1.68-.12.82-.36 1.6-.7 2.38zM12 4.04c.16 0 .32.02.48.03-1.14.7-2.11 1.75-2.77 2.97-.24.44-.45.9-.62 1.38-.41-1.21-.63-2.5-.63-3.83.91.24 1.86.45 2.85.45.23 0 .45-.02.69-.04zM8.13 8.3c.12.5.28 1 .49 1.48.61 1.42 1.54 2.63 2.68 3.58-.39.29-.81.54-1.25.75-.92.43-1.92.68-2.98.72.1-2.11.75-4.08 1.85-5.69.11-.16.22-.32.33-.49.01 0 .02-.01.02-.02C9.43 8.52 9.22 8.3 9 8.3h-.87z"
-                clip-rule="evenodd"
-              /></svg
-          ></a>
-          <a
-            href="mailto:tobiakindele30@gmail.com"
-            class="text-slate-500 hover:text-blue-400 transition"
-            aria-label="Email"
-            ><svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M22 5.5H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1v-11a1 1 0 0 0-1-1zm-1.5 2.62-7.99 5.33a1 1 0 0 1-1.02 0l-7.99-5.33c-.01-.01.05-.1.08-.12h17.84c.03.02.09.11.08.12z"
-              /></svg
-          ></a>
-        </div>
-        <p>&copy; <span id="year"></span> Tobiloba. All Rights Reserved.</p>
-      </div>
-    </footer>
-
+    <script src="assets/js/main.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // --- Scroll Animations ---
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-              }
-            });
-          },
-          {
-            threshold: 0.1,
-          }
-        );
-
-        const elementsToReveal = document.querySelectorAll(".reveal");
-        elementsToReveal.forEach((el) => observer.observe(el));
-
-        // --- Easter Egg ---
-        const easterEgg = document.getElementById("easter-egg");
-        easterEgg.addEventListener("click", () => {
-          // Clone and replace to restart animation
-          const newEgg = easterEgg.cloneNode(true);
-          easterEgg.parentNode.replaceChild(newEgg, easterEgg);
-          newEgg.classList.add("rocket-launch");
-
-          // Re-assign listener after animation
-          newEgg.addEventListener(
-            "animationend",
-            () => {
-              newEgg.classList.remove("rocket-launch");
-            },
-            { once: true }
-          );
-        });
-
-        // --- Dynamic Year for Footer ---
-        document.getElementById("year").textContent = new Date().getFullYear();
-
-        // --- Smooth Scrolling for Nav Links ---
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute("href")).scrollIntoView({
-              behavior: "smooth",
-            });
-            closeMobileMenu();
-          });
-        });
-
-        // --- Mobile Menu Toggle ---
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-        const menuIconOpen = document.getElementById("menu-icon-open");
-        const menuIconClose = document.getElementById("menu-icon-close");
-
-        function closeMobileMenu() {
-          mobileMenu.classList.add("hidden");
-          menuIconOpen.classList.remove("hidden");
-          menuIconClose.classList.add("hidden");
-          mobileMenuButton.setAttribute("aria-expanded", "false");
-        }
-
-        mobileMenuButton.addEventListener("click", () => {
-          const isOpen = !mobileMenu.classList.contains("hidden");
-          if (isOpen) {
-            closeMobileMenu();
-          } else {
-            mobileMenu.classList.remove("hidden");
-            menuIconOpen.classList.add("hidden");
-            menuIconClose.classList.remove("hidden");
-            mobileMenuButton.setAttribute("aria-expanded", "true");
-          }
-        });
-      });
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
-
-
-
-
