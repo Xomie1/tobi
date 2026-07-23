@@ -1,0 +1,12 @@
+{
+  "name": "tobi-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Oloruntobiloba Akindele — personal portfolio",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/styles.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

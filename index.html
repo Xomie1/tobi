@@ -12,71 +12,13 @@
       name="keywords"
       content="Tobiloba, Data Analyst, Backend Engineer, AI Engineer, Portfolio, Python, SQL, FastAPI, RAG, C#, JavaScript, Excel, Automation"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      /* Custom Styles & Animations */
-      body {
-        font-family: "Inter", sans-serif;
-        background-color: #0f172a; /* slate-900 */
-        color: #cbd5e1; /* slate-300 */
-      }
-
-      /* Scroll-based Animations */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      }
-
-      .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* Easter Egg Animation */
-      .rocket-launch {
-        animation: launch 1s ease-in-out;
-      }
-
-      @keyframes launch {
-        0% {
-          transform: translateY(0) rotate(0);
-        }
-        20% {
-          transform: translateY(-10px) rotate(-15deg);
-        }
-        80% {
-          transform: translateY(-100px) rotate(25deg);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-150px) rotate(45deg);
-          opacity: 0;
-        }
-      }
-
-      /* Custom gradient text */
-      .gradient-text {
-        background: linear-gradient(to right, #60a5fa, #c084fc);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      /* Project Card Tilt Effect */
-      .project-card {
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-      .project-card:hover {
-        transform: translateY(-5px) rotateX(5deg) rotateY(-5deg) scale(1.03);
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body class="bg-slate-900 text-slate-300 antialiased">
     <!-- Header -->
@@ -106,7 +48,60 @@
           >
             Download CV
           </a>
+          <button
+            id="mobile-menu-button"
+            type="button"
+            class="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-300 hover:text-blue-400 hover:bg-slate-800 transition"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg
+              id="menu-icon-open"
+              class="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+            <svg
+              id="menu-icon-close"
+              class="w-6 h-6 hidden"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
+      </div>
+      <div
+        id="mobile-menu"
+        class="md:hidden hidden border-t border-slate-800 bg-slate-900/95 backdrop-blur-sm"
+      >
+        <nav class="flex flex-col px-6 py-4 space-y-1">
+          <a href="#about" class="py-2 hover:text-blue-400 transition">About</a>
+          <a href="#experience" class="py-2 hover:text-blue-400 transition"
+            >Experience</a
+          >
+          <a href="#projects" class="py-2 hover:text-blue-400 transition"
+            >Projects</a
+          >
+          <a href="#skills" class="py-2 hover:text-blue-400 transition">Skills</a>
+          <a href="#contact" class="py-2 hover:text-blue-400 transition">Contact</a>
+        </nav>
       </div>
     </header>
 
@@ -1019,7 +1014,33 @@
             document.querySelector(this.getAttribute("href")).scrollIntoView({
               behavior: "smooth",
             });
+            closeMobileMenu();
           });
+        });
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const menuIconOpen = document.getElementById("menu-icon-open");
+        const menuIconClose = document.getElementById("menu-icon-close");
+
+        function closeMobileMenu() {
+          mobileMenu.classList.add("hidden");
+          menuIconOpen.classList.remove("hidden");
+          menuIconClose.classList.add("hidden");
+          mobileMenuButton.setAttribute("aria-expanded", "false");
+        }
+
+        mobileMenuButton.addEventListener("click", () => {
+          const isOpen = !mobileMenu.classList.contains("hidden");
+          if (isOpen) {
+            closeMobileMenu();
+          } else {
+            mobileMenu.classList.remove("hidden");
+            menuIconOpen.classList.add("hidden");
+            menuIconClose.classList.remove("hidden");
+            mobileMenuButton.setAttribute("aria-expanded", "true");
+          }
         });
       });
     </script>
