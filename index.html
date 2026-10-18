@@ -1,552 +1,356 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="midnight">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tobiloba - Data Analyst & Backend/AI Engineer</title>
+    <title>Tobi Akindele · Backend/AI Engineer &amp; Data Analyst</title>
     <meta
       name="description"
-      content="Portfolio of Tobiloba, a Data Analyst and Backend/AI Engineer specializing in Python, SQL, FastAPI, and RAG pipelines."
+      content="Tobi Akindele builds backend systems and AI pipelines in Python, FastAPI and SQL, and turns messy operational data into decisions. Projects, write-ups and what's next."
     />
+    <meta property="og:title" content="Tobi Akindele · Backend/AI Engineer & Data Analyst" />
     <meta
-      name="keywords"
-      content="Tobiloba, Data Analyst, Backend Engineer, AI Engineer, Portfolio, Python, SQL, FastAPI, RAG, C#, JavaScript, Excel, Automation"
+      property="og:description"
+      content="Projects, write-ups and roadmap: RAG pipelines, an AI DJ, football modelling, automation and data analysis."
     />
-    <link rel="stylesheet" href="assets/css/dashboard.css" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0d12" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%237ee2a0' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 23h8' stroke='%237ee2a0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+    <script>
+      // Apply the saved (or OS-preferred) theme before first paint.
+      (function () {
+        var t;
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (!t) t = "midnight"; // terminal-first; paper and phosphor are one click away
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/terminal.css" />
   </head>
   <body>
-    <!-- Nav -->
-    <header class="nav">
-      <div class="nav-brand">
-        <span class="status-dot"></span>
-        <span class="nav-name">TOBILOBA</span>
-        <span class="nav-pill">DATA_ANALYST.v2</span>
-      </div>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Top bar: window chrome + file tabs -->
+    <header class="topbar">
+      <a class="topbar-path" href="#top" aria-label="Back to top">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="ps1"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span></span>
+      </a>
+      <nav class="tabs" aria-label="Sections">
+        <a href="#about" data-section="about">about.md</a>
+        <a href="#experience" data-section="experience">experience.log</a>
+        <a href="#projects" data-section="projects">projects/</a>
+        <a href="#writeups" data-section="writeups">writeups/</a>
+        <a href="#roadmap" data-section="roadmap">roadmap.todo</a>
+        <a href="#skills" data-section="skills">skills.json</a>
+        <a href="#contact" data-section="contact">contact.sh</a>
       </nav>
-      <div class="nav-right">
-        <span class="clock" id="clock">00:00:00</span>
-        <a
-          href="https://drive.google.com/uc?export=download&id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh"
-          class="btn btn-dark btn-sm"
-          >Download CV</a
-        >
+      <div class="topbar-right">
+        <button type="button" class="chip-btn" id="palette-btn" aria-label="Open command palette">
+          <kbd>⌘K</kbd>
+        </button>
+        <button type="button" class="chip-btn" id="theme-btn" aria-label="Switch colour theme">
+          <span aria-hidden="true">◐</span> <span id="theme-name">midnight</span>
+        </button>
+        <span class="clock" id="clock" aria-hidden="true">00:00:00</span>
         <button
-          id="mobile-nav-toggle"
-          class="mobile-nav-toggle"
           type="button"
-          aria-label="Toggle navigation menu"
+          class="chip-btn menu-btn"
+          id="menu-btn"
+          aria-label="Open section menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+          ☰
         </button>
       </div>
     </header>
-    <nav class="mobile-menu" id="mobile-menu">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Sections">
+      <a href="#about">about.md</a>
+      <a href="#experience">experience.log</a>
+      <a href="#projects">projects/</a>
+      <a href="#writeups">writeups/</a>
+      <a href="#roadmap">roadmap.todo</a>
+      <a href="#skills">skills.json</a>
+      <a href="#contact">contact.sh</a>
     </nav>
 
-    <main>
-      <!-- Hero -->
-      <section class="hero">
-        <div>
-          <div class="chip">
-            <span class="chip-dot"></span>
-            AVAILABLE FOR WORK
-          </div>
-          <h1>Hi, I'm Tobiloba —<br />I turn raw data into decisions.</h1>
-          <p class="hero-sub">
-            Data Analyst &amp; Backend/AI Engineer. I build AI-powered backend
-            systems and automated reporting pipelines that turn messy
-            operational data into clear, actionable dashboards.
+    <main id="main">
+      <!-- Hero: headline + interactive terminal -->
+      <section id="top" class="hero wrap">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> open to work · Dublin, IE</p>
+          <h1>
+            Hi, I'm Tobi.<br />
+            I build backend systems &amp; AI pipelines, and turn messy data into
+            <span class="hl">decisions</span>.
+          </h1>
+          <p class="lede">
+            Backend/AI Engineer and Data Analyst. I've shipped an offline RAG assistant for a
+            real client, automated KPI reporting in aviation, and I'm doing an MSc in Computer
+            Science in Dublin.
           </p>
-          <div class="hero-actions">
-            <a href="mailto:tobiakindele30@gmail.com" class="btn btn-dark">Get in touch</a>
-            <a href="https://github.com/Xomie1" target="_blank" class="btn btn-outline">GitHub</a>
-            <a
-              href="https://www.linkedin.com/in/tobi-akindele-3643051a3/"
-              target="_blank"
-              class="btn btn-outline"
-              >LinkedIn</a
-            >
+          <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:tobiakindele30@gmail.com">./say-hello.sh</a>
+            <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh">download cv.pdf</a>
+            <a class="btn" href="https://github.com/Xomie1" target="_blank" rel="noopener">github ↗</a>
+            <a class="btn" href="https://www.linkedin.com/in/tobi-akindele-3643051a3/" target="_blank" rel="noopener">linkedin ↗</a>
           </div>
         </div>
-        <div class="hero-card">
-          <img
-            src="assets/img/profile/profile-pic.jpg"
-            alt="Tobiloba's photo"
-            class="hero-photo"
-          />
-          <div class="hero-card-meta">
-            <span>ROLE: Data Analyst</span>
-            <span>STATUS: <span class="status-active">ACTIVE</span></span>
+
+        <div class="win term" id="terminal">
+          <div class="win-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="win-title">zsh — tobi@dublin: ~</span>
+            <span class="win-hint">type <kbd>help</kbd></span>
+          </div>
+          <div class="term-body" id="term-body">
+            <div class="term-out" id="term-out" aria-live="polite"></div>
+            <form class="term-line" id="term-form" autocomplete="off">
+              <label for="term-input" class="ps1">
+                <span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir" id="term-cwd">~</span><span class="ps-sym">$</span>
+              </label>
+              <input
+                id="term-input"
+                class="term-input"
+                type="text"
+                spellcheck="false"
+                autocapitalize="off"
+                autocorrect="off"
+                aria-label="Terminal command"
+              />
+            </form>
+          </div>
+          <div class="term-suggest" id="term-suggest" aria-label="Try a command">
+            <button type="button" data-cmd="help">help</button>
+            <button type="button" data-cmd="ls projects">ls projects</button>
+            <button type="button" data-cmd="cat about.md">cat about.md</button>
+            <button type="button" data-cmd="roadmap">roadmap</button>
+            <button type="button" data-cmd="sudo hire-tobi">sudo hire-tobi</button>
           </div>
         </div>
       </section>
 
-      <!-- KPI row -->
-      <section class="kpi-row">
-        <div class="kpi-card">
-          <div class="kpi-label">Projects Shipped</div>
-          <div class="kpi-value">13</div>
-          <div class="kpi-delta">+3 this year</div>
-          <div class="kpi-bars">
-            <div class="kpi-bar" style="height: 30%"></div>
-            <div class="kpi-bar" style="height: 40%"></div>
-            <div class="kpi-bar" style="height: 50%"></div>
-            <div class="kpi-bar" style="height: 60%"></div>
-            <div class="kpi-bar" style="height: 80%"></div>
-            <div class="kpi-bar" style="height: 100%"></div>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Records Reconciled</div>
-          <div class="kpi-value">1,000+</div>
-          <div class="kpi-delta">flight data</div>
-          <div class="kpi-bars">
-            <div class="kpi-bar" style="height: 20%"></div>
-            <div class="kpi-bar" style="height: 30%"></div>
-            <div class="kpi-bar" style="height: 40%"></div>
-            <div class="kpi-bar" style="height: 70%"></div>
-            <div class="kpi-bar" style="height: 90%"></div>
-            <div class="kpi-bar" style="height: 100%"></div>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Reporting Effort Cut</div>
-          <div class="kpi-value">30%</div>
-          <div class="kpi-delta">manual &rarr; automated</div>
-          <div class="kpi-bars">
-            <div class="kpi-bar" style="height: 100%"></div>
-            <div class="kpi-bar" style="height: 80%"></div>
-            <div class="kpi-bar" style="height: 70%"></div>
-            <div class="kpi-bar" style="height: 60%"></div>
-            <div class="kpi-bar" style="height: 50%"></div>
-            <div class="kpi-bar" style="height: 40%"></div>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Hours Saved / Week</div>
-          <div class="kpi-value">10+</div>
-          <div class="kpi-delta">via automation</div>
-          <div class="kpi-bars">
-            <div class="kpi-bar" style="height: 44%"></div>
-            <div class="kpi-bar" style="height: 56%"></div>
-            <div class="kpi-bar" style="height: 56%"></div>
-            <div class="kpi-bar" style="height: 78%"></div>
-            <div class="kpi-bar" style="height: 89%"></div>
-            <div class="kpi-bar" style="height: 100%"></div>
-          </div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Years in Data &amp; AI</div>
-          <div class="kpi-value">2+</div>
-          <div class="kpi-delta">and counting</div>
-          <div class="kpi-bars">
-            <div class="kpi-bar" style="height: 25%"></div>
-            <div class="kpi-bar" style="height: 38%"></div>
-            <div class="kpi-bar" style="height: 50%"></div>
-            <div class="kpi-bar" style="height: 63%"></div>
-            <div class="kpi-bar" style="height: 75%"></div>
-            <div class="kpi-bar" style="height: 100%"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- About -->
-      <section id="about" class="section about-grid">
-        <div>
-          <div class="eyebrow">// ABOUT</div>
-          <h2>Who I am</h2>
-        </div>
-        <div>
-          <p>
-            I'm a curious mind exploring data, code, and design. I started by
-            pulling Excel sheets apart, which grew into automation projects
-            and full applications.
-          </p>
-          <p>
-            I love making ideas both functional and visually appealing. When
-            I'm not coding or designing, I'm diving into AI research,
-            financial markets, or finding new ways to tell stories with data.
-          </p>
-          <div class="tag-row">
-            <span class="tag-pill">Data Analysis</span>
-            <span class="tag-pill">Automation</span>
-            <span class="tag-pill">AI / RAG Pipelines</span>
-            <span class="tag-pill">Data Storytelling</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Experience -->
-      <section id="experience" class="section">
-        <div class="eyebrow">// EXPERIENCE_LOG</div>
-        <h2>Where I've worked</h2>
-        <div class="timeline" style="margin-top: 32px">
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="timeline-head">
-              <h3>Backend Software Engineer &amp; Sprint Lead</h3>
-              <span class="timeline-dates">Feb – May 2026</span>
-            </div>
-            <div class="timeline-company">Trivera Labs &middot; MSc Academic Practicum</div>
-            <ul>
-              <li>
-                Built a production RAG pipeline with FastAPI, hybrid BM25 +
-                ChromaDB vector search, and RRF ranking.
-              </li>
-              <li>
-                Integrated Qwen2.5 via Ollama and Kokoro TTS for a fully
-                offline, self-hosted system.
-              </li>
-              <li>
-                Delivered to external client NexusGuard across 3 Agile
-                sprints as sprint lead on a 9-person team.
-              </li>
+      <!-- about.md -->
+      <section id="about" class="section wrap" data-path="about.md">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> cat about.md</p>
+          <h2><span class="hash" aria-hidden="true">##</span> about</h2>
+        </header>
+        <div class="about-grid">
+          <div class="prose">
+            <p>
+              I build backend systems and AI pipelines, and I turn messy operational data into
+              automated reporting that people actually trust.
+            </p>
+            <p>
+              I started by pulling Excel sheets apart. That grew into automation (VBA workbooks
+              ported to Apps Script, crawlers that enrich thousands of rows) and then full
+              applications: FastAPI services, RAG assistants and desktop tools.
+            </p>
+            <p>
+              My background spans data analysis in a high-stakes aviation environment and hands-on
+              backend/AI engineering, including shipping a production RAG system for a real client.
+              Outside of work I'm usually deep in AI research, financial markets, music
+              recommendation or football modelling, or looking for new ways to tell stories with
+              data.
+            </p>
+            <ul class="tag-row" aria-label="Focus areas">
+              <li>#backend</li>
+              <li>#rag-pipelines</li>
+              <li>#automation</li>
+              <li>#data-analysis</li>
+              <li>#data-storytelling</li>
             </ul>
-            <div class="mono-tag-row">
-              <span class="mono-tag">FastAPI</span>
-              <span class="mono-tag">RAG</span>
-              <span class="mono-tag">ChromaDB</span>
-              <span class="mono-tag">Ollama</span>
-            </div>
           </div>
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="timeline-head">
-              <h3>Data Analyst</h3>
-              <span class="timeline-dates">Aug 2024 – Dec 2025</span>
+          <div class="win code-win">
+            <div class="win-bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="win-title">education.yml</span>
             </div>
-            <div class="timeline-company">Nigerian Airspace Management Agency (NAMA)</div>
-            <ul>
-              <li>
-                Automated KPI dashboards for senior management using Python
-                and Google Apps Script, cutting manual reporting effort by
-                30%.
-              </li>
-              <li>
-                Reconciled 1,000+ flight records alongside Air Traffic
-                Control to maintain data accuracy.
-              </li>
-              <li>Retained beyond NYSC service year based on performance.</li>
-            </ul>
-            <div class="mono-tag-row">
-              <span class="mono-tag">Python</span>
-              <span class="mono-tag">Google Apps Script</span>
-              <span class="mono-tag">KPI Dashboards</span>
-            </div>
+            <pre class="code" id="education-yml"></pre>
           </div>
         </div>
       </section>
 
-      <!-- Projects -->
-      <section id="projects" class="section">
-        <div class="projects-head">
-          <div>
-            <div class="eyebrow">// PROJECTS (13)</div>
-            <h2>What I've built</h2>
-          </div>
-          <div class="filter-row">
-            <button class="filter-chip active" data-filter="All">All</button>
-            <button class="filter-chip" data-filter="AI">AI</button>
-            <button class="filter-chip" data-filter="Automation">Automation</button>
-            <button class="filter-chip" data-filter="SQL/Data">SQL/Data</button>
-            <button class="filter-chip" data-filter="Dashboards">Dashboards</button>
-            <button class="filter-chip" data-filter="Apps">Apps</button>
+      <!-- experience.log -->
+      <section id="experience" class="section wrap" data-path="experience.log">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> git log --graph --oneline career</p>
+          <h2><span class="hash" aria-hidden="true">##</span> experience</h2>
+        </header>
+        <ol class="gitlog" id="gitlog"></ol>
+      </section>
+
+      <!-- projects/ -->
+      <section id="projects" class="section wrap" data-path="projects/">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> <span id="ls-cmd">ls projects/</span></p>
+          <h2><span class="hash" aria-hidden="true">##</span> projects <span class="count" id="proj-count"></span></h2>
+        </header>
+
+        <div class="toolbar" role="toolbar" aria-label="Filter projects">
+          <div class="flags" id="tag-flags"></div>
+          <div class="toolbar-right">
+            <label class="grep">
+              <span aria-hidden="true">grep -i</span>
+              <input type="search" id="proj-search" placeholder="rag, sql, c#…" aria-label="Search projects" />
+            </label>
+            <button type="button" class="flag" id="archive-flag" aria-pressed="false">-a</button>
+            <div class="seg" role="group" aria-label="View">
+              <button type="button" class="seg-btn active" data-view="grid" aria-pressed="true">▦ grid</button>
+              <button type="button" class="seg-btn" data-view="list" aria-pressed="false">≡ ls -l</button>
+            </div>
           </div>
         </div>
-        <div class="project-grid">
-          <div class="project-card" data-cats="Automation,AI">
-            <div class="project-icon">🤖</div>
-            <h3>Job Application Bot</h3>
-            <p>
-              Automates LinkedIn and Indeed job applications with a
-              monitoring dashboard, running on a scheduled pipeline.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Python</span>
-              <span class="project-tag">FastAPI</span>
-              <span class="project-tag">Playwright</span>
-            </div>
-            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
-              >View on GitHub &rarr;</a
-            >
+
+        <div id="proj-grid" class="proj-grid"></div>
+        <div id="proj-list" class="proj-list" hidden></div>
+        <p class="empty" id="proj-empty" hidden>
+          grep: no matches. <button type="button" class="link-btn" id="proj-reset">reset filters</button>
+        </p>
+        <p class="hint" id="archive-hint"></p>
+      </section>
+
+      <!-- writeups/ -->
+      <section id="writeups" class="section wrap" data-path="writeups/">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> ls -lt writeups/</p>
+          <h2><span class="hash" aria-hidden="true">##</span> write-ups</h2>
+        </header>
+        <ul class="writeup-list" id="writeup-list"></ul>
+      </section>
+
+      <!-- roadmap.todo -->
+      <section id="roadmap" class="section wrap" data-path="roadmap.todo">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> cat roadmap.todo</p>
+          <h2><span class="hash" aria-hidden="true">##</span> roadmap <span class="sub">projects yet to come</span></h2>
+        </header>
+        <div class="roadmap" id="roadmap-board"></div>
+      </section>
+
+      <!-- skills.json -->
+      <section id="skills" class="section wrap" data-path="skills.json">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> cat skills.json | jq</p>
+          <h2><span class="hash" aria-hidden="true">##</span> skills</h2>
+        </header>
+        <div class="win code-win">
+          <div class="win-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="win-title">skills.json</span>
           </div>
-          <div class="project-card" data-cats="AI">
-            <img src="assets/img/projects/tts-streaming.png" alt="Real-Time TTS Streaming System" class="project-shot" />
-            <div class="project-icon">🎙️</div>
-            <h3>Real-Time TTS Streaming System</h3>
-            <p>
-              Streams synthesized speech in real time over WebSockets,
-              chunking audio for low-latency playback.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">FastAPI</span>
-              <span class="project-tag">WebSockets</span>
-              <span class="project-tag">Qwen3-TTS</span>
+          <pre class="code" id="skills-json"></pre>
+        </div>
+      </section>
+
+      <!-- contact.sh -->
+      <section id="contact" class="section wrap" data-path="contact.sh">
+        <header class="sec-head">
+          <p class="sec-cmd"><span class="ps-sym">$</span> ./contact.sh</p>
+          <h2><span class="hash" aria-hidden="true">##</span> let's work together</h2>
+        </header>
+        <div class="contact-grid">
+          <div class="win code-win">
+            <div class="win-bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="win-title">contact.sh</span>
             </div>
-            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
-              >View on GitHub &rarr;</a
-            >
+<pre class="code"><span class="c">#!/usr/bin/env bash</span>
+<span class="c"># Open to Data Analyst &amp; Backend/AI Engineer roles,</span>
+<span class="c"># in Dublin and across Ireland.</span>
+
+<span class="k">EMAIL</span>=<span class="s">"<a href="mailto:tobiakindele30@gmail.com">tobiakindele30@gmail.com</a>"</span>
+<span class="k">GITHUB</span>=<span class="s">"<a href="https://github.com/Xomie1" target="_blank" rel="noopener">github.com/Xomie1</a>"</span>
+<span class="k">LINKEDIN</span>=<span class="s">"<a href="https://www.linkedin.com/in/tobi-akindele-3643051a3/" target="_blank" rel="noopener">linkedin.com/in/tobi-akindele</a>"</span>
+<span class="k">DRIBBBLE</span>=<span class="s">"<a href="https://dribbble.com/xomie1" target="_blank" rel="noopener">dribbble.com/xomie1</a>"</span>
+
+<span class="f">say_hello</span>() {
+  open <span class="s">"mailto:$EMAIL"</span>  <span class="c"># opens your mail client</span>
+}</pre>
           </div>
-          <div class="project-card" data-cats="AI,Automation">
-            <div class="project-icon">📄</div>
-            <h3>CV Rewriter &amp; Job Intelligence Tool</h3>
-            <p>
-              AI-powered CV tailoring tool paired with a 66-company
-              application tracker.
+          <div class="contact-actions">
+            <p class="prose">
+              I'm always happy to talk about new projects, interesting data problems or a role on a
+              good team. The fastest way to reach me is email.
             </p>
-            <div class="project-tags">
-              <span class="project-tag">Python</span>
-              <span class="project-tag">Claude API</span>
-            </div>
-            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="Apps">
-            <img src="assets/img/projects/rentmag.png" alt="RentMag" class="project-shot" />
-            <div class="project-icon">🏠</div>
-            <h3>RentMag</h3>
-            <p>
-              Cross-platform desktop application for managing rental
-              properties, tenants, and payments.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Python</span>
-              <span class="project-tag">PyQt5</span>
-            </div>
-            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="Apps">
-            <div class="project-icon">📱</div>
-            <h3>MAUI Cross-Platform App</h3>
-            <p>
-              Cross-platform app built on a shared C# codebase using .NET
-              MAUI.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">C#</span>
-              <span class="project-tag">.NET MAUI</span>
-            </div>
-            <a href="https://github.com/Xomie1?tab=repositories" target="_blank" class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="Automation">
-            <div class="project-icon">💰</div>
-            <h3>Finance Automation Tool</h3>
-            <p>
-              Automated financial reporting from Excel to Google Sheets,
-              saving 10+ hours of manual work weekly.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Apps Script</span>
-              <span class="project-tag">Excel</span>
-            </div>
-            <a
-              href="https://github.com/Xomie1/Finance-Automation-Tool.git"
-              target="_blank"
-              class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="Apps">
-            <div class="project-icon">⛽</div>
-            <h3>Gas Flow C# WinForms App</h3>
-            <p>
-              Desktop application for calculating gas flow based on the AGA8
-              standard for industrial engineering.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">C#</span>
-              <span class="project-tag">WinForms</span>
-            </div>
-            <a
-              href="https://github.com/Xomie1/Gas-Flow-C-WinForms-App.git"
-              target="_blank"
-              class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="Apps">
-            <div class="project-icon">💸</div>
-            <h3>Full-Stack Expense Tracker</h3>
-            <p>
-              Web application to track personal expenses, built as a
-              full-stack thesis project with user authentication.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Python</span>
-              <span class="project-tag">Django</span>
-            </div>
-            <a href="https://github.com/Xomie1/Expenses.git" target="_blank" class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="SQL/Data">
-            <div class="project-icon">🦠</div>
-            <h3>Covid-19 SQL Analysis</h3>
-            <p>
-              In-depth data exploration of COVID-19 datasets using advanced
-              SQL queries to uncover trends.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">SQL</span>
-            </div>
-            <a
-              href="https://github.com/Xomie1/CovidProject/blob/main/CovidProject.sql"
-              target="_blank"
-              class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="SQL/Data">
-            <div class="project-icon">🏘️</div>
-            <h3>Nashville Housing SQL Cleaning</h3>
-            <p>
-              Data cleaning project focused on standardizing and structuring
-              raw housing data using SQL.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">SQL</span>
-            </div>
-            <a
-              href="https://github.com/Xomie1/SQL-data-cleaning-project-queries/blob/main/Nashville%20Data%20Cleaning%20Project.sql"
-              target="_blank"
-              class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="SQL/Data">
-            <div class="project-icon">📊</div>
-            <h3>Disease Outbreak Trends — India (2024)</h3>
-            <p>
-              Analyzed weekly IDSP reports to track outbreaks, uncover case
-              and death trends, and measure severity using case fatality
-              rates.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Excel</span>
-            </div>
-            <a
-              href="https://github.com/Xomie1/Outbreak-Analysis-from-IDSP-Weekly-Reports.git"
-              target="_blank"
-              class="project-link"
-              >View on GitHub &rarr;</a
-            >
-          </div>
-          <div class="project-card" data-cats="Dashboards">
-            <img src="assets/img/dashboards/dashboard-1.png" alt="Global Superstore customer cohort dashboard" class="project-shot" />
-            <div class="project-icon">🛒</div>
-            <h3>Global Superstore: Customer Cohorts</h3>
-            <p>
-              Interactive Tableau dashboard segmenting customers into
-              cohorts to surface purchasing patterns and retention trends.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Tableau</span>
-            </div>
-          </div>
-          <div class="project-card" data-cats="Dashboards">
-            <img src="assets/img/dashboards/dashboard-2.png" alt="Airbnb market data analysis dashboard" class="project-shot" />
-            <div class="project-icon">🏡</div>
-            <h3>Airbnb Market Data Analysis</h3>
-            <p>
-              End-to-end Tableau analysis of Airbnb listings data, covering
-              pricing, availability, and neighbourhood trends.
-            </p>
-            <div class="project-tags">
-              <span class="project-tag">Tableau</span>
-            </div>
+            <a class="btn btn-primary btn-lg" href="mailto:tobiakindele30@gmail.com">$ say_hello</a>
+            <button type="button" class="btn" id="copy-email" data-email="tobiakindele30@gmail.com">
+              copy email
+            </button>
+            <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh">download cv.pdf</a>
           </div>
         </div>
       </section>
 
-      <!-- Skills -->
-      <section id="skills" class="section">
-        <div class="eyebrow">// SKILLS_&amp;_TOOLS</div>
-        <h2>What I work with</h2>
-        <div class="skills-grid" style="margin-top: 32px">
-          <div class="skill-card">
-            <h3>Data &amp; Automation</h3>
-            <div class="skill-pills">
-              <span class="skill-pill">Python</span>
-              <span class="skill-pill">SQL</span>
-              <span class="skill-pill">Excel</span>
-              <span class="skill-pill">Tableau</span>
-              <span class="skill-pill">Pandas</span>
-            </div>
-          </div>
-          <div class="skill-card">
-            <h3>Software Engineering</h3>
-            <div class="skill-pills">
-              <span class="skill-pill">JavaScript</span>
-              <span class="skill-pill">Google Apps Script</span>
-              <span class="skill-pill">C# / .NET</span>
-              <span class="skill-pill">HTML &amp; CSS</span>
-              <span class="skill-pill">Git &amp; GitHub</span>
-            </div>
-          </div>
-          <div class="skill-card">
-            <h3>AI / ML</h3>
-            <div class="skill-pills">
-              <span class="skill-pill">RAG Pipelines</span>
-              <span class="skill-pill">LLM Integration</span>
-              <span class="skill-pill">ChromaDB</span>
-              <span class="skill-pill">Ollama</span>
-              <span class="skill-pill">Whisper STT</span>
-              <span class="skill-pill">Kokoro TTS</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact" class="section-contact">
-        <div class="contact-panel">
-          <div>
-            <div class="contact-eyebrow">// GET_IN_TOUCH</div>
-            <h2>Let's work together.</h2>
-            <p>
-              I'm always open to discussing new projects, creative ideas, or
-              opportunities to be part of an amazing team.
-            </p>
-            <a href="mailto:tobiakindele30@gmail.com" class="btn" style="background: #fff; color: var(--ink); font-weight: 700; padding: 14px 26px"
-              >Say Hello</a
-            >
-          </div>
-          <div class="contact-links">
-            <a href="mailto:tobiakindele30@gmail.com">tobiakindele30@gmail.com</a>
-            <a href="https://github.com/Xomie1" target="_blank">github.com/Xomie1</a>
-            <a href="https://www.linkedin.com/in/tobi-akindele-3643051a3/" target="_blank"
-              >linkedin.com/in/tobi-akindele</a
-            >
-            <a href="https://dribbble.com/xomie1" target="_blank">dribbble.com/xomie1</a>
-          </div>
-        </div>
-        <div class="footer-note">&copy; <span id="year"></span> Tobiloba. All Rights Reserved.</div>
-      </section>
+      <footer class="site-foot wrap">
+        <p>
+          © <span id="year">2026</span> Tobi Akindele · plain HTML, CSS &amp; JS, no frameworks ·
+          <a href="https://github.com/Xomie1/tobi" target="_blank" rel="noopener">view source ↗</a>
+        </p>
+      </footer>
     </main>
 
+    <!-- vim-style status line -->
+    <footer class="statusbar" aria-hidden="true">
+      <span class="sb-mode">NORMAL</span>
+      <span class="sb-path" id="sb-path">~/portfolio</span>
+      <span class="sb-branch">⎇ main</span>
+      <span class="sb-fill"></span>
+      <span class="sb-meta" id="sb-meta"></span>
+      <span class="sb-help"><kbd>⌘K</kbd> palette</span>
+      <span class="sb-pos" id="sb-pos">Top</span>
+    </footer>
+
+    <!-- Project detail window -->
+    <dialog class="win proj-dialog" id="proj-dialog" aria-labelledby="proj-dialog-title">
+      <div class="win-bar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="win-title" id="proj-dialog-path"></span>
+        <button type="button" class="win-close" id="proj-dialog-close" aria-label="Close">esc ✕</button>
+      </div>
+      <div class="proj-dialog-body" id="proj-dialog-body"></div>
+    </dialog>
+
+    <!-- Command palette -->
+    <div class="palette-backdrop" id="palette" hidden>
+      <div class="palette win" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-input">
+          <span aria-hidden="true">&gt;</span>
+          <input
+            type="text"
+            id="palette-input"
+            placeholder="Jump to a section, project or write-up…"
+            aria-label="Search commands"
+            aria-controls="palette-list"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <kbd>esc</kbd>
+        </div>
+        <ul class="palette-list" id="palette-list" role="listbox"></ul>
+      </div>
+    </div>
+
+    <noscript>
+      <p class="noscript">
+        The project, write-up and roadmap lists need JavaScript. Everything is also on
+        <a href="https://github.com/Xomie1">github.com/Xomie1</a>.
+      </p>
+    </noscript>
+
+    <script src="assets/js/content.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+    <script src="assets/js/shell.js"></script>
   </body>
 </html>

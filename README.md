@@ -16,7 +16,7 @@ I build backend systems and AI pipelines, and I turn messy operational data into
 ## 💼 Experience
 
 **Backend Software Engineer & Sprint Lead** — *Trivera Labs (MSc Academic Practicum)*
-`Feb 2026 – May 2026`
+`Jan 2026 – Mar 2026`
 - Built a production **RAG pipeline**: FastAPI backend, hybrid **BM25 + ChromaDB** vector search, **RRF ranking**, **Qwen2.5** served via Ollama, and **Kokoro TTS** — fully offline, no external API calls.
 - Delivered to an external client (**NexusGuard**) across 3 Agile sprints as sprint lead on a 9-person team.
 
@@ -35,7 +35,7 @@ I build backend systems and AI pipelines, and I turn messy operational data into
 | **Job Application Bot** | Automates LinkedIn/Indeed job applications with a monitoring dashboard | Python, FastAPI, Playwright, Telegram, GitHub Actions |
 | **Real-Time TTS Streaming System** | Streams synthesized speech with chunked audio over WebSockets | FastAPI, WebSockets, Qwen3-TTS |
 | **CV Rewriter & Job Intelligence Tool** | AI-tailored CV rewriting plus a 66-company application tracker | Python, Claude API |
-| **RentMag** | Cross-platform desktop app for managing rental properties | Python, PyQt5 |
+| [**RentMag**](https://github.com/Xomie1/Rent-magazine) | Desktop app that batch-processes property photos for a rental magazine (360° detection, retouch, logo, Google Sheets lookup) | Python, PyQt5, Pillow |
 | [**Stock Analysis Dashboard**](https://github.com/Xomie1) | Analyzes and visualizes stock market data | Python, pandas |
 | [**Finance Automation Tool**](https://github.com/Xomie1/Finance-Automation-Tool) | Automates financial reporting from Excel into Google Sheets, saving 10+ hrs/week | Excel, Google Apps Script |
 | [**Gas Flow Calculation System**](https://github.com/Xomie1/Gas-Flow-C-WinForms-App) | Desktop app computing gas flow to the AGA8 industrial standard | C#, WinForms |
@@ -107,3 +107,17 @@ I'm actively looking for Data Analyst and Backend/AI Engineer roles in Dublin an
 - ✉️ [tobiakindele30@gmail.com](mailto:tobiakindele30@gmail.com)
 - 💼 [linkedin.com/in/tobiakindele-3643051a3](https://linkedin.com/in/tobiakindele-3643051a3)
 - 🐙 [github.com/Xomie1](https://github.com/Xomie1)
+
+---
+
+## 🖥️ About this repo
+
+This repo is my portfolio site: plain HTML, CSS and JavaScript with no build step, styled like a terminal.
+
+- `index.html`: the page (hero, about, contact copy lives here)
+- `assets/js/content.js`: **projects, write-ups, roadmap, experience and skills**. Edit this file to add things; the cards, terminal and ⌘K palette all read from it
+- `writeups/*.md`: write-ups in Markdown, rendered by `writeup.html?p=<slug>`
+- `assets/css/terminal.css`: the three themes (midnight, paper, phosphor)
+
+Preview locally with `python3 -m http.server` and open http://localhost:8000. Write-ups are fetched, so opening the file straight from disk won't load them.
+
