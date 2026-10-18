@@ -21,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/terminal.css" />
@@ -30,49 +30,52 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="topbar">
+      <span class="dots" data-scope="session" aria-hidden="true"><i></i><i></i><i></i></span>
       <a class="topbar-path" href="index.html" aria-label="Back to the portfolio">
-        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="ps1"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio/writeups</span></span>
+        <span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio/writeups</span>
       </a>
       <nav class="tabs" aria-label="Sections">
-        <a href="index.html#about">about.md</a>
-        <a href="index.html#experience">experience.log</a>
-        <a href="index.html#projects">projects/</a>
-        <a href="index.html#writeups" class="active">writeups/</a>
-        <a href="index.html#roadmap">roadmap.todo</a>
-        <a href="index.html#skills">skills.json</a>
-        <a href="index.html#contact">contact.sh</a>
+        <span class="sess" aria-hidden="true">[0]</span>
+        <a href="index.html#about">1:about</a>
+        <a href="index.html#experience">2:experience</a>
+        <a href="index.html#projects">3:projects</a>
+        <a href="index.html#writeups" class="active">4:writeups</a>
+        <a href="index.html#roadmap">5:roadmap</a>
+        <a href="index.html#skills">6:skills</a>
+        <a href="index.html#contact">7:contact</a>
       </nav>
       <div class="topbar-right">
-        <button type="button" class="chip-btn" id="palette-btn" aria-label="Open command palette"><kbd>⌘K</kbd></button>
-        <button type="button" class="chip-btn" id="theme-btn" aria-label="Switch colour theme">
-          <span aria-hidden="true">◐</span> <span id="theme-name">midnight</span>
+        <button type="button" class="bar-btn" id="palette-btn" aria-label="Open command palette">⌘K</button>
+        <button type="button" class="bar-btn" id="theme-btn" aria-label="Switch colour theme">
+          ◐ <span id="theme-name">midnight</span>
         </button>
-        <span class="clock" id="clock" aria-hidden="true">00:00:00</span>
+        <span class="clock" id="clock" aria-hidden="true">00:00</span>
         <button
           type="button"
-          class="chip-btn menu-btn"
+          class="bar-btn menu-btn"
           id="menu-btn"
           aria-label="Open section menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
         >
-          ☰
+          ☰ menu
         </button>
       </div>
     </header>
     <nav class="mobile-menu" id="mobile-menu" aria-label="Sections">
-      <a href="index.html#about">about.md</a>
-      <a href="index.html#experience">experience.log</a>
-      <a href="index.html#projects">projects/</a>
-      <a href="index.html#writeups">writeups/</a>
-      <a href="index.html#roadmap">roadmap.todo</a>
-      <a href="index.html#skills">skills.json</a>
-      <a href="index.html#contact">contact.sh</a>
+      <a href="index.html#about"><span>1</span>:about.md</a>
+      <a href="index.html#experience"><span>2</span>:experience.log</a>
+      <a href="index.html#projects"><span>3</span>:projects/</a>
+      <a href="index.html#writeups"><span>4</span>:writeups/</a>
+      <a href="index.html#roadmap"><span>5</span>:roadmap.todo</a>
+      <a href="index.html#skills"><span>6</span>:skills.json</a>
+      <a href="index.html#contact"><span>7</span>:contact.sh</a>
     </nav>
 
     <main id="main" class="reader">
-      <p class="sec-cmd"><span class="ps-sym">$</span> less <span id="w-file">writeups/</span></p>
+      <p class="sec-cmd">
+        <span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span>less <span id="w-file">writeups/</span>
+      </p>
       <h1 class="reader-title" id="w-title">loading…</h1>
       <p class="reader-sub" id="w-sub"></p>
       <div class="win code-win frontmatter" id="w-front-win" hidden>
@@ -85,18 +88,27 @@
       <article class="article" id="w-body"></article>
       <nav class="reader-nav" id="w-nav" aria-label="More write-ups"></nav>
       <footer class="site-foot">
-        <p><a href="index.html#writeups">← cd ../writeups</a> · <a href="index.html">~/portfolio</a></p>
+        <p>
+          <a class="tlink" href="index.html#writeups">cd ../writeups</a>
+          <a class="tlink" href="index.html">~/portfolio</a>
+          <span class="faint">· press <kbd>q</kbd> to go back, <kbd>?</kbd> for keys</span>
+        </p>
       </footer>
     </main>
 
-    <footer class="statusbar" aria-hidden="true">
-      <span class="sb-mode">READ</span>
+    <footer class="statusbar" aria-label="Status line">
+      <span class="sb-mode" id="sb-mode">READ</span>
       <span class="sb-path" id="sb-path">~/portfolio/writeups</span>
-      <span class="sb-branch">⎇ main</span>
+      <span class="sb-dock" id="sb-dock" aria-label="Minimised windows"></span>
+      <form class="sb-ex" id="sb-ex" hidden>
+        <span aria-hidden="true">:</span>
+        <input id="sb-ex-input" aria-label="Command line" autocomplete="off" spellcheck="false" autocapitalize="off" />
+      </form>
+      <span class="sb-msg" id="sb-msg" role="status"></span>
       <span class="sb-fill"></span>
       <span class="sb-meta" id="sb-read"></span>
-      <span class="sb-help"><kbd>⌘K</kbd> palette</span>
-      <span class="sb-pos" id="sb-pos">Top</span>
+      <button type="button" class="sb-help" id="keys-btn">? keys</button>
+      <span class="sb-pos" id="sb-pos" aria-hidden="true">Top</span>
     </footer>
 
     <div class="palette-backdrop" id="palette" hidden>

@@ -118,6 +118,7 @@ This repo is my portfolio site: plain HTML, CSS and JavaScript with no build ste
 - `assets/js/content.js`: **projects, write-ups, roadmap, experience and skills**. Edit this file to add things; the cards, terminal and ⌘K palette all read from it
 - `writeups/*.md`: write-ups in Markdown, rendered by `writeup.html?p=<slug>`
 - `assets/css/terminal.css`: the three themes (midnight, paper, phosphor)
+- `assets/js/main.js` / `shell.js`: window controls (red closes, yellow minimises to the status bar, green maximises), vim-style keys and the `:` command line, and the interactive terminal. Press `?` on the site for the full keybindings list
 
 Preview locally with `python3 -m http.server` and open http://localhost:8000. Write-ups are fetched, so opening the file straight from disk won't load them.
 

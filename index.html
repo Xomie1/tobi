@@ -20,7 +20,7 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%237ee2a0' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 23h8' stroke='%237ee2a0' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
     />
     <script>
-      // Apply the saved (or OS-preferred) theme before first paint.
+      // Apply the saved theme before first paint.
       (function () {
         var t;
         try { t = localStorage.getItem("theme"); } catch (e) {}
@@ -31,7 +31,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/terminal.css" />
@@ -39,69 +39,75 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Top bar: window chrome + file tabs -->
+    <!-- Top bar: the terminal emulator's own window + tmux window list -->
     <header class="topbar">
+      <span class="dots" data-scope="session" aria-hidden="true"><i></i><i></i><i></i></span>
       <a class="topbar-path" href="#top" aria-label="Back to top">
-        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="ps1"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span></span>
+        <span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span>
       </a>
       <nav class="tabs" aria-label="Sections">
-        <a href="#about" data-section="about">about.md</a>
-        <a href="#experience" data-section="experience">experience.log</a>
-        <a href="#projects" data-section="projects">projects/</a>
-        <a href="#writeups" data-section="writeups">writeups/</a>
-        <a href="#roadmap" data-section="roadmap">roadmap.todo</a>
-        <a href="#skills" data-section="skills">skills.json</a>
-        <a href="#contact" data-section="contact">contact.sh</a>
+        <span class="sess" aria-hidden="true">[0]</span>
+        <a href="#about" data-section="about">1:about</a>
+        <a href="#experience" data-section="experience">2:experience</a>
+        <a href="#projects" data-section="projects">3:projects</a>
+        <a href="#writeups" data-section="writeups">4:writeups</a>
+        <a href="#roadmap" data-section="roadmap">5:roadmap</a>
+        <a href="#skills" data-section="skills">6:skills</a>
+        <a href="#contact" data-section="contact">7:contact</a>
       </nav>
       <div class="topbar-right">
-        <button type="button" class="chip-btn" id="palette-btn" aria-label="Open command palette">
-          <kbd>⌘K</kbd>
+        <button type="button" class="bar-btn" id="palette-btn" aria-label="Open command palette">⌘K</button>
+        <button type="button" class="bar-btn" id="theme-btn" aria-label="Switch colour theme">
+          ◐ <span id="theme-name">midnight</span>
         </button>
-        <button type="button" class="chip-btn" id="theme-btn" aria-label="Switch colour theme">
-          <span aria-hidden="true">◐</span> <span id="theme-name">midnight</span>
-        </button>
-        <span class="clock" id="clock" aria-hidden="true">00:00:00</span>
+        <span class="clock" id="clock" aria-hidden="true">00:00</span>
         <button
           type="button"
-          class="chip-btn menu-btn"
+          class="bar-btn menu-btn"
           id="menu-btn"
           aria-label="Open section menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
         >
-          ☰
+          ☰ menu
         </button>
       </div>
     </header>
     <nav class="mobile-menu" id="mobile-menu" aria-label="Sections">
-      <a href="#about">about.md</a>
-      <a href="#experience">experience.log</a>
-      <a href="#projects">projects/</a>
-      <a href="#writeups">writeups/</a>
-      <a href="#roadmap">roadmap.todo</a>
-      <a href="#skills">skills.json</a>
-      <a href="#contact">contact.sh</a>
+      <a href="#about"><span>1</span>:about.md</a>
+      <a href="#experience"><span>2</span>:experience.log</a>
+      <a href="#projects"><span>3</span>:projects/</a>
+      <a href="#writeups"><span>4</span>:writeups/</a>
+      <a href="#roadmap"><span>5</span>:roadmap.todo</a>
+      <a href="#skills"><span>6</span>:skills.json</a>
+      <a href="#contact"><span>7</span>:contact.sh</a>
     </nav>
 
     <main id="main">
-      <!-- Hero: headline + interactive terminal -->
+      <!-- Hero: banner + interactive terminal -->
       <section id="top" class="hero wrap">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> open to work · Dublin, IE</p>
-          <h1>
-            Hi, I'm Tobi.<br />
-            I build backend systems &amp; AI pipelines, and turn messy data into
-            <span class="hl">decisions</span>.
-          </h1>
+<pre class="banner" aria-hidden="true">████████╗ ██████╗ ██████╗ ██╗
+╚══██╔══╝██╔═══██╗██╔══██╗██║
+   ██║   ██║   ██║██████╔╝██║
+   ██║   ██║   ██║██╔══██╗██║
+   ██║   ╚██████╔╝██████╔╝██║
+   ╚═╝    ╚═════╝ ╚═════╝ ╚═╝</pre>
+          <h1 class="hero-name"><span class="hash" aria-hidden="true"># </span>Oloruntobiloba (Tobi) Akindele</h1>
+          <p class="hero-role">
+            backend/ai engineer · data analyst · dublin, ie · <span class="t-ok">● open to work</span>
+          </p>
+          <p class="tagline">
+            <span class="gt" aria-hidden="true">&gt; </span>I build backend systems &amp; AI pipelines, and turn
+            messy data into <span class="hl">decisions</span><span class="cursor" aria-hidden="true">█</span>
+          </p>
           <p class="lede">
-            Backend/AI Engineer and Data Analyst. I've shipped an offline RAG assistant for a
-            real client, automated KPI reporting in aviation, and I'm doing an MSc in Computer
-            Science in Dublin.
+            I've shipped an offline RAG assistant for a real client, automated KPI reporting in
+            aviation, and I'm doing an MSc in Computer Science in Dublin.
           </p>
           <div class="cta-row">
             <a class="btn btn-primary" href="mailto:tobiakindele30@gmail.com">./say-hello.sh</a>
-            <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh">download cv.pdf</a>
+            <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh">cv.pdf</a>
             <a class="btn" href="https://github.com/Xomie1" target="_blank" rel="noopener">github ↗</a>
             <a class="btn" href="https://www.linkedin.com/in/tobi-akindele-3643051a3/" target="_blank" rel="noopener">linkedin ↗</a>
           </div>
@@ -131,11 +137,12 @@
             </form>
           </div>
           <div class="term-suggest" id="term-suggest" aria-label="Try a command">
-            <button type="button" data-cmd="help">help</button>
-            <button type="button" data-cmd="ls projects">ls projects</button>
-            <button type="button" data-cmd="cat about.md">cat about.md</button>
-            <button type="button" data-cmd="roadmap">roadmap</button>
-            <button type="button" data-cmd="sudo hire-tobi">sudo hire-tobi</button>
+            <span class="faint">try:</span>
+            <button type="button" class="t-run" data-cmd="help">help</button>
+            <button type="button" class="t-run" data-cmd="ls projects">ls projects</button>
+            <button type="button" class="t-run" data-cmd="cat about.md">cat about.md</button>
+            <button type="button" class="t-run" data-cmd="roadmap">roadmap</button>
+            <button type="button" class="t-run" data-cmd="sudo hire-tobi">sudo hire-tobi</button>
           </div>
         </div>
       </section>
@@ -143,7 +150,7 @@
       <!-- about.md -->
       <section id="about" class="section wrap" data-path="about.md">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> cat about.md</p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span class="typed">cat about.md</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> about</h2>
         </header>
         <div class="about-grid">
@@ -185,7 +192,7 @@
       <!-- experience.log -->
       <section id="experience" class="section wrap" data-path="experience.log">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> git log --graph --oneline career</p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span class="typed">git log --graph career</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> experience</h2>
         </header>
         <ol class="gitlog" id="gitlog"></ol>
@@ -194,7 +201,7 @@
       <!-- projects/ -->
       <section id="projects" class="section wrap" data-path="projects/">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> <span id="ls-cmd">ls projects/</span></p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span id="ls-cmd">ls projects/</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> projects <span class="count" id="proj-count"></span></h2>
         </header>
 
@@ -207,8 +214,8 @@
             </label>
             <button type="button" class="flag" id="archive-flag" aria-pressed="false">-a</button>
             <div class="seg" role="group" aria-label="View">
-              <button type="button" class="seg-btn active" data-view="grid" aria-pressed="true">▦ grid</button>
-              <button type="button" class="seg-btn" data-view="list" aria-pressed="false">≡ ls -l</button>
+              <button type="button" class="seg-btn active" data-view="grid" aria-pressed="true">boxes</button>
+              <button type="button" class="seg-btn" data-view="list" aria-pressed="false">ls -l</button>
             </div>
           </div>
         </div>
@@ -224,16 +231,16 @@
       <!-- writeups/ -->
       <section id="writeups" class="section wrap" data-path="writeups/">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> ls -lt writeups/</p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span class="typed">ls -lt writeups/</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> write-ups</h2>
         </header>
-        <ul class="writeup-list" id="writeup-list"></ul>
+        <ul class="ls-out" id="writeup-list"></ul>
       </section>
 
       <!-- roadmap.todo -->
       <section id="roadmap" class="section wrap" data-path="roadmap.todo">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> cat roadmap.todo</p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span class="typed">cat roadmap.todo</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> roadmap <span class="sub">projects yet to come</span></h2>
         </header>
         <div class="roadmap" id="roadmap-board"></div>
@@ -242,7 +249,7 @@
       <!-- skills.json -->
       <section id="skills" class="section wrap" data-path="skills.json">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> cat skills.json | jq</p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span class="typed">jq . skills.json</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> skills</h2>
         </header>
         <div class="win code-win">
@@ -257,7 +264,7 @@
       <!-- contact.sh -->
       <section id="contact" class="section wrap" data-path="contact.sh">
         <header class="sec-head">
-          <p class="sec-cmd"><span class="ps-sym">$</span> ./contact.sh</p>
+          <p class="sec-cmd"><span class="ps-user">tobi</span>@<span class="ps-host">dublin</span>:<span class="ps-dir">~/portfolio</span><span class="ps-sym">$ </span><span class="typed">./contact.sh</span></p>
           <h2><span class="hash" aria-hidden="true">##</span> let's work together</h2>
         </header>
         <div class="contact-grid">
@@ -285,10 +292,8 @@
               good team. The fastest way to reach me is email.
             </p>
             <a class="btn btn-primary btn-lg" href="mailto:tobiakindele30@gmail.com">$ say_hello</a>
-            <button type="button" class="btn" id="copy-email" data-email="tobiakindele30@gmail.com">
-              copy email
-            </button>
-            <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh">download cv.pdf</a>
+            <button type="button" class="btn" id="copy-email" data-email="tobiakindele30@gmail.com">copy email</button>
+            <a class="btn" href="https://drive.google.com/uc?export=download&amp;id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh">cv.pdf</a>
           </div>
         </div>
       </section>
@@ -296,30 +301,36 @@
       <footer class="site-foot wrap">
         <p>
           © <span id="year">2026</span> Tobi Akindele · plain HTML, CSS &amp; JS, no frameworks ·
-          <a href="https://github.com/Xomie1/tobi" target="_blank" rel="noopener">view source ↗</a>
+          <a href="https://github.com/Xomie1/tobi" target="_blank" rel="noopener">view source ↗</a> ·
+          press <kbd>?</kbd> for keybindings
         </p>
       </footer>
     </main>
 
     <!-- vim-style status line -->
-    <footer class="statusbar" aria-hidden="true">
-      <span class="sb-mode">NORMAL</span>
+    <footer class="statusbar" aria-label="Status line">
+      <span class="sb-mode" id="sb-mode">NORMAL</span>
       <span class="sb-path" id="sb-path">~/portfolio</span>
-      <span class="sb-branch">⎇ main</span>
+      <span class="sb-dock" id="sb-dock" aria-label="Minimised windows"></span>
+      <form class="sb-ex" id="sb-ex" hidden>
+        <span aria-hidden="true">:</span>
+        <input id="sb-ex-input" aria-label="Command line" autocomplete="off" spellcheck="false" autocapitalize="off" />
+      </form>
+      <span class="sb-msg" id="sb-msg" role="status"></span>
       <span class="sb-fill"></span>
       <span class="sb-meta" id="sb-meta"></span>
-      <span class="sb-help"><kbd>⌘K</kbd> palette</span>
-      <span class="sb-pos" id="sb-pos">Top</span>
+      <button type="button" class="sb-help" id="keys-btn">? keys</button>
+      <span class="sb-pos" id="sb-pos" aria-hidden="true">Top</span>
     </footer>
 
-    <!-- Project detail window -->
-    <dialog class="win proj-dialog" id="proj-dialog" aria-labelledby="proj-dialog-title">
+    <!-- Project man page -->
+    <dialog class="win dlg" id="proj-dialog" aria-labelledby="proj-dialog-path">
       <div class="win-bar">
         <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="win-title" id="proj-dialog-path"></span>
-        <button type="button" class="win-close" id="proj-dialog-close" aria-label="Close">esc ✕</button>
+        <button type="button" class="win-close" data-win-action="close" aria-label="Close">esc</button>
       </div>
-      <div class="proj-dialog-body" id="proj-dialog-body"></div>
+      <div class="dlg-body" id="proj-dialog-body"></div>
     </dialog>
 
     <!-- Command palette -->
