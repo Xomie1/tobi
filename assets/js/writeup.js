@@ -94,8 +94,8 @@
   const prev = published[i - 1];
   const next = published[i + 1];
   $("#w-nav").innerHTML =
-    (prev ? `<a class="prev" href="writeup.html?p=${esc(prev.slug)}"><small>← previous</small>${esc(prev.title)}</a>` : "") +
-    (next ? `<a class="next" href="writeup.html?p=${esc(next.slug)}"><small>next →</small>${esc(next.title)}</a>` : "");
+    (prev ? `<a class="box prev" href="writeup.html?p=${esc(prev.slug)}"><span class="box-label faint">← prev</span>${esc(prev.title)}</a>` : "") +
+    (next ? `<a class="box next" href="writeup.html?p=${esc(next.slug)}"><span class="box-label faint">next →</span>${esc(next.title)}</a>` : "");
 
   // ---- load + render -------------------------------------------------------
   fetch(`writeups/${encodeURIComponent(w.slug)}.md`)

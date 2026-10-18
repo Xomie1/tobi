@@ -157,7 +157,7 @@
     line(esc(p.summary));
     (p.details || []).forEach((d) => line(`  <span class="t-ok">›</span> ${esc(d)}`, "t-dim"));
     line(`<span class="t-info">stack:</span> ${esc((p.stack || []).join(", "))}`);
-    const bits = [run("open " + p.slug, "open window")];
+    const bits = [run("man " + p.slug)];
     if (p.repo) bits.push(link(p.repo, "source ↗"));
     if (p.writeup && writeups.find((w) => w.slug === p.writeup && !w.draft)) bits.push(run("open " + p.writeup, "read write-up"));
     line(bits.join("  "));
@@ -219,7 +219,8 @@
     ["ls [dir]", "list ~, projects/ or writeups/  (ls -a shows the archive)"],
     ["cd <dir>", "jump to a section: about, projects, writeups, roadmap, contact…"],
     ["cat <file>", "print about.md, roadmap.todo, a project or a write-up"],
-    ["open <name>", "open a project window or a write-up"],
+    ["man <name>", "a project's manual page, e.g. man vibe-dj"],
+    ["open <name>", "open a project or a write-up"],
     ["projects [tag]", "list projects, e.g. projects ai"],
     ["writeups", "list write-ups"],
     ["roadmap", "projects yet to come"],
@@ -227,12 +228,13 @@
     ["cv", "download my CV"],
     ["theme [name]", "midnight | paper | phosphor"],
     ["clear", "clear the screen (Ctrl+L)"],
+    ["exit", "close this window (the red light does too)"],
   ];
 
   const COMMANDS = {
     help() {
       HELP.forEach(([c, d]) => line(`${run(c.split(" ")[0], c)}${" ".repeat(Math.max(2, 16 - c.length))}<span class="t-dim">${esc(d)}</span>`));
-      line(`<span class="t-faint">tab completes · ↑/↓ history · ⌘K opens the palette · there may be easter eggs</span>`);
+      line(`<span class="t-faint">tab completes · ↑/↓ history · esc leaves the prompt · press ? outside it for keybindings</span>`);
     },
     whoami() {
       line(`<b>${esc(prof.short)}</b>, ${esc(prof.role)} in ${esc(prof.location)}.`);
@@ -378,7 +380,23 @@
       line(`<span class="t-faint">(psst: try ${run("sudo hire-tobi")})</span>`);
     },
     rm: () => line("rm: permission denied. this portfolio is read-only (and version-controlled).", "t-err"),
-    exit: () => line("there's no exit, only more projects. " + run("ls projects")),
+    exit() {
+      const win = document.getElementById("terminal");
+      if (win && P.winAction) P.winAction(win, "close");
+      else line("there's no exit, only more projects. " + run("ls projects"));
+    },
+    logout: () => COMMANDS.exit(),
+    man(args) {
+      if (!args.length) return line("What manual page do you want?\nFor example, try " + run("man vibe-dj") + " or " + run("man keys"));
+      const what = args[0].replace(/\/$/, "");
+      if (/^(keys|tobi-keys|tobi)$/.test(what)) return P.openKeys?.();
+      const p = projects.find((x) => x.slug === what);
+      if (p) {
+        P.openProject(p.slug);
+        return line(`<span class="t-faint">opened man ${esc(p.slug)}</span>`);
+      }
+      line(`No manual entry for ${esc(what)}`, "t-err");
+    },
     vim: () => line(`opened vim. just kidding, you'd never get out. the source is on ${link(prof.source, "GitHub")}`, "t-dim"),
     git: (args) =>
       args[0] === "log"
@@ -387,7 +405,6 @@
   };
   COMMANDS.vi = COMMANDS.nano = COMMANDS.emacs = COMMANDS.vim;
   COMMANDS.hire = () => COMMANDS.sudo(["hire-tobi"]);
-  COMMANDS.man = () => COMMANDS.help();
 
   function execute(raw) {
     const text = raw.trim();
@@ -405,7 +422,7 @@
 
   // ---------------------------------------------------- tab completion --
   function candidates(words) {
-    if (words.length <= 1) return Object.keys(COMMANDS).filter((c) => !["vi", "nano", "emacs", "man", "copy-email"].includes(c));
+    if (words.length <= 1) return Object.keys(COMMANDS).filter((c) => !["vi", "nano", "emacs", "logout", "copy-email"].includes(c));
     const cmd = words[0];
     const slugs = projects.map((p) => p.slug);
     const posts = writeups.map((w) => w.slug);
@@ -418,6 +435,8 @@
         return [...files, ...slugs.map((s) => "projects/" + s), ...posts.map((s) => "writeups/" + s + ".md")];
       case "open":
         return [...slugs, ...posts];
+      case "man":
+        return [...slugs, "keys"];
       case "theme":
         return P.THEMES;
       case "projects":
@@ -512,6 +531,10 @@
   // -------------------------------------------------------------- boot --
   function boot() {
     const d = new Date();
+    const ok = (msg) => line(`[  <span class="t-ok">OK</span>  ] ${msg}`, "t-dim");
+    ok(`Mounted <b>/home/tobi/projects</b> (${live.length} projects).`);
+    ok(`Started <b>writeups.service</b> (${writeups.filter((w) => !w.draft).length} published).`);
+    ok(`Reached target <b>open-to-work.target</b>.`);
     line(`Last login: ${d.toDateString()} ${d.toTimeString().slice(0, 8)} on ttys001`, "t-faint");
 
     const steps = [{ cmd: "neofetch", then: neofetch }];
@@ -570,6 +593,18 @@
     }
     timer = setTimeout(typeNext, 500);
   }
+
+  // used by the traffic lights: red closes the window, "restart shell" brings it back
+  window.Shell = {
+    restart() {
+      if (finishBoot) finishBoot();
+      out.innerHTML = "";
+      setCwd("~");
+      boot();
+    },
+    exec: execute,
+    focus: () => input.focus({ preventScroll: true }),
+  };
 
   boot();
 })();
