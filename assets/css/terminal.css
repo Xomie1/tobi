@@ -55,7 +55,7 @@
   --on-accent: #ffffff;
   --sel: rgba(23, 121, 74, 0.18);
   --glow: none;
-  --photo-tint: #17794a;
+  --photo-tint: #8fd6a9;
   --win-shadow: 0 18px 40px -26px rgba(60, 45, 20, 0.45);
   color-scheme: light;
 }
@@ -777,36 +777,26 @@ kbd {
 /* neofetch */
 .neofetch {
   display: grid;
-  grid-template-columns: 124px minmax(0, 1fr);
+  grid-template-columns: 144px minmax(0, 1fr);
   gap: 18px;
   align-items: start;
   margin: 6px 0 10px;
   white-space: normal;
 }
 .nf-photo {
-  position: relative;
-  width: 124px;
+  width: 144px; /* 48px art at 3x, so every pixel is the same size */
   aspect-ratio: 3 / 4;
-  overflow: hidden;
   background: var(--photo-tint);
   border: 1px solid var(--line-2);
 }
-.nf-photo img {
+.nf-photo canvas {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.15) brightness(1.05);
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
   mix-blend-mode: multiply;
-}
-[data-theme="paper"] .nf-photo img {
-  mix-blend-mode: luminosity;
-  opacity: 0.92;
-}
-.nf-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.18) 2px 3px);
+  cursor: pointer;
 }
 .nf-info {
   min-width: 0;
@@ -972,6 +962,210 @@ kbd {
 }
 .commit:first-child::after {
   color: var(--accent);
+}
+.commit.t-intern::after {
+  color: var(--amber);
+}
+.commit.t-edu::after {
+  color: var(--cyan);
+}
+.commit.hot h3 {
+  color: var(--accent);
+}
+.commit.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.commit.reveal::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.7s ease 0.25s;
+}
+.commit.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.commit.reveal.in::before {
+  transform: scaleY(1);
+}
+.phase {
+  margin: 4px 0 12px;
+  padding-left: 2ch;
+  border-left: 1px dashed var(--line-2);
+}
+.phase-head {
+  font-size: 13.5px;
+  margin-bottom: 6px;
+}
+.phase-head b {
+  color: var(--cyan);
+  font-weight: 500;
+}
+.flash {
+  animation: flash 1.2s ease;
+}
+@keyframes flash {
+  0%,
+  40% {
+    outline: 1px solid var(--accent);
+    outline-offset: 6px;
+    background: var(--sel);
+  }
+  100% {
+    outline: 1px solid transparent;
+    outline-offset: 6px;
+  }
+}
+
+/* ---------- career branch graph ---------- */
+.xg-wrap {
+  margin: 0 0 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+.xg {
+  display: block;
+  font-family: var(--font);
+}
+.xg-grid {
+  stroke: var(--line);
+  stroke-dasharray: 2 4;
+}
+.xg-year {
+  fill: var(--fg-faint);
+  font-size: 12px;
+  text-anchor: middle;
+}
+.xg-main {
+  fill: none;
+  stroke: var(--fg-dim);
+  stroke-width: 2;
+}
+.xg-line {
+  fill: none;
+  stroke: var(--tc);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-width 0.15s;
+}
+.xg .future {
+  stroke-dasharray: 3 5;
+}
+.xg-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 16;
+  pointer-events: stroke;
+}
+.xg-dot {
+  fill: var(--bg);
+  stroke: var(--tc);
+  stroke-width: 2;
+}
+.xg-commit {
+  fill: var(--tc);
+}
+.xg-label {
+  fill: var(--tc);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.xg-br {
+  --tc: var(--green);
+  cursor: pointer;
+  outline: none;
+}
+.xg-br.t-intern {
+  --tc: var(--amber);
+}
+.xg-br.t-edu {
+  --tc: var(--cyan);
+}
+.xg-br.hot .xg-line,
+.xg-br:focus-visible .xg-line {
+  stroke-width: 4;
+}
+.xg-br.hot .xg-label,
+.xg-br:focus-visible .xg-label {
+  text-decoration: underline;
+}
+.xg-head text {
+  fill: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+}
+.xg-headdot {
+  fill: var(--accent);
+}
+.xg-pulse {
+  fill: none;
+  stroke: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: xg-pulse 1.8s ease-out infinite;
+}
+@keyframes xg-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+/* draw-in: lines trace themselves, then dots and labels appear */
+.xg .draw {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+}
+.xg .xg-dot,
+.xg .xg-label,
+.xg .future,
+.xg .xg-head {
+  opacity: 0;
+}
+.xg.on .draw {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.8s ease calc(0.5s + var(--i, 0) * 0.3s);
+}
+.xg.on .xg-main.draw {
+  transition: stroke-dashoffset 1.3s ease;
+}
+.xg.on .xg-dot,
+.xg.on .xg-label,
+.xg.on .future {
+  opacity: 1;
+  transition: opacity 0.4s ease calc(1s + var(--i, 0) * 0.3s);
+}
+.xg.on .xg-head {
+  opacity: 1;
+  transition: opacity 0.5s ease 2.6s;
+}
+.xg.static *,
+.xg.static {
+  transition: none !important;
+}
+.xg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0 0 30px;
+  font-size: 12.5px;
+}
+.xg-legend .t-work {
+  color: var(--green);
+}
+.xg-legend .t-intern {
+  color: var(--amber);
+}
+.xg-legend .t-edu {
+  color: var(--cyan);
+}
+.xg-swipe {
+  display: none;
 }
 .commit-head {
   display: flex;
@@ -2088,7 +2282,7 @@ kbd {
     gap: 10px;
   }
   .nf-photo {
-    width: 72px;
+    width: 96px; /* 2x */
   }
   .nf-row {
     grid-template-columns: 8.5ch minmax(0, 1fr);
@@ -2096,6 +2290,12 @@ kbd {
   }
   .ls-row {
     grid-template-columns: 7ch minmax(0, 1fr);
+  }
+  .xg-tip {
+    display: none;
+  }
+  .xg-swipe {
+    display: inline;
   }
   .ls-perm,
   .ls-own,

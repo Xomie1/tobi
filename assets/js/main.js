@@ -129,6 +129,10 @@
       lines.push(`  <span class="p">-</span> ${k("degree")} ${s(e.degree)}`);
       lines.push(`    ${k("school")} ${s(e.school)}`);
       lines.push(`    ${k("dates")} ${s(e.dates)}${e.note ? "  " + c(e.note) : ""}`);
+      if (e.modules?.length) {
+        lines.push(`    ${k("modules")}`);
+        e.modules.forEach((m) => lines.push(`      <span class="p">-</span> ${s(m)}`));
+      }
       if (e.awards?.length) {
         lines.push(`    ${k("awards")}`);
         e.awards.forEach((a) => lines.push(`      <span class="p">-</span> ${s(a)}`));
@@ -149,14 +153,26 @@
 
   const gitlog = $("#gitlog");
   if (gitlog) {
+    const bullets = (list) => `<ul class="commit-bullets">${list.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>`;
     const items = SITE.experience.map((x, i) => {
       const refs =
         i === 0
-          ? `(<span class="head">HEAD -&gt; main</span>, <span class="tag">tag: ${esc(x.id)}</span>)`
-          : `(<span class="tag">tag: ${esc(x.id)}</span>)`;
+          ? `(<span class="head">HEAD -&gt; main</span>, <span class="tag">${esc(x.id)}</span>)`
+          : `(<span class="tag">${esc(x.id)}</span>)`;
       const proj = x.project && projectsBySlug.get(x.project);
+      const body = x.phases
+        ? x.phases
+            .map(
+              (ph) => `
+            <div class="phase">
+              <div class="phase-head"><span class="sha">${shortSha(x.id + ph.title)}</span> <b>${esc(ph.title)}</b> <span class="faint">${esc(ph.dates)}</span></div>
+              ${bullets(ph.bullets)}
+            </div>`
+            )
+            .join("")
+        : bullets(x.bullets);
       return `
-        <li class="commit">
+        <li class="commit t-${esc(x.type || "work")}" id="exp-${esc(x.id)}" data-branch="${esc(x.id)}">
           <div class="commit-head">
             <span class="sha">${shortSha(x.id + x.role)}</span>
             <span class="refs">${refs}</span>
@@ -164,23 +180,194 @@
           </div>
           <h3>${esc(x.role)}</h3>
           <div class="commit-org">${esc(x.org)}${x.note ? " · " + esc(x.note) : ""}</div>
-          <ul class="commit-bullets">${x.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>
+          ${body}
           <ul class="stack-row" aria-label="Stack">${x.stack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>
           ${proj ? `<p class="hint"><a class="tlink" href="${projectUrl(proj.slug)}" data-open="${esc(proj.slug)}">man ${esc(proj.slug)}</a></p>` : ""}
         </li>`;
     });
     const first = SITE.education[SITE.education.length - 1];
     items.push(`
-      <li class="commit">
+      <li class="commit t-edu" data-branch="${esc(first.id)}">
         <div class="commit-head">
           <span class="sha">${shortSha("root")}</span>
-          <span class="refs">(<span class="tag">tag: v0.1</span>)</span>
+          <span class="refs">(<span class="tag">${esc(first.id)}</span>)</span>
           <span class="commit-date">${esc(first.dates)}</span>
         </div>
         <h3>initial commit</h3>
         <div class="commit-org">${esc(first.degree)} · ${esc(first.school)}</div>
       </li>`);
     gitlog.innerHTML = items.join("");
+
+    // entries slide in as you reach them
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      const rio = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((en) => {
+            if (!en.isIntersecting) return;
+            en.target.classList.add("in");
+            rio.unobserve(en.target);
+          }),
+        { rootMargin: "0px 0px -12% 0px" }
+      );
+      $$(".commit", gitlog).forEach((c) => {
+        c.classList.add("reveal");
+        rio.observe(c);
+      });
+    }
+  }
+
+  // ------------------------------------------------- career branch graph --
+  // Every role and degree is a branch off `main`, drawn on a real time axis.
+  const xgWrap = $("#xg-wrap");
+  if (xgWrap) {
+    const ym = (v, isEnd = false) => {
+      const [y, m] = String(v).split("-").map(Number);
+      return y + ((m ? m - 1 : isEnd ? 11 : 0) + (isEnd ? 1 : 0)) / 12;
+    };
+    const today = new Date();
+    const now = today.getFullYear() + (today.getMonth() + today.getDate() / 31) / 12;
+    const branches = [
+      ...SITE.experience.map((x) => ({
+        id: x.id,
+        title: `${x.role} · ${x.org}`,
+        dates: x.dates,
+        type: x.type || "work",
+        s: ym(x.start),
+        e: ym(x.end, true),
+        commits: (x.phases || []).filter((ph) => ph.at).map((ph) => ({ t: ym(ph.at), title: ph.title })),
+        target: `exp-${x.id}`,
+      })),
+      ...SITE.education.map((ed) => ({
+        id: ed.id,
+        title: `${ed.degree} · ${ed.school}`,
+        dates: ed.dates,
+        type: "edu",
+        s: ym(ed.start),
+        e: ym(ed.end, true),
+        commits: [],
+        target: "about",
+      })),
+    ].sort((p, q) => p.s - q.s);
+
+    // jobs branch up from main, education branches down, so they never cross;
+    // on each side a branch reuses the first lane that's free by its start
+    const laneEnds = { up: [], down: [] };
+    branches.forEach((br) => {
+      br.side = br.type === "edu" ? "down" : "up";
+      const ends = laneEnds[br.side];
+      let lane = ends.findIndex((end) => end <= br.s - 0.04);
+      if (lane === -1) lane = ends.length;
+      ends[lane] = br.e;
+      br.lane = lane;
+    });
+    const t0 = Math.floor(Math.min(...branches.map((br) => br.s)));
+    const t1 = Math.max(Math.ceil(Math.max(...branches.map((br) => br.e))), Math.ceil(now));
+
+    let drawn = false;
+    function renderGraph() {
+      const W = Math.max(xgWrap.clientWidth, 680);
+      const padL = 18;
+      const padR = 30;
+      const x = (t) => padL + ((t - t0) / (t1 - t0)) * (W - padL - padR);
+      const LANE = 38;
+      const MAIN = 18 + laneEnds.up.length * LANE;
+      const axisY = MAIN + laneEnds.down.length * LANE + 34;
+      const H = axisY + 8;
+      const xn = x(now);
+      const CH = 7.6; // label glyph width at 12.5px
+      let g = "";
+      for (let y = t0; y <= t1; y++)
+        g += `<line class="xg-grid" x1="${x(y)}" y1="${MAIN - laneEnds.up.length * LANE}" x2="${x(y)}" y2="${axisY - 16}"/><text class="xg-year" x="${x(y)}" y="${axisY}">${y}</text>`;
+      g += `<path class="xg-main draw" d="M${x(t0)} ${MAIN}H${xn}"/><path class="xg-main future" d="M${xn} ${MAIN}H${x(t1)}"/>`;
+      branches.forEach((br, i) => {
+        const xs = x(br.s);
+        const xe = x(br.e);
+        const dir = br.side === "up" ? -1 : 1;
+        const y = MAIN + dir * (br.lane + 1) * LANE;
+        const r = Math.min(16, (xe - xs) / 2);
+        const merged = br.e <= now;
+        const past = `M${xs} ${MAIN}Q${xs} ${y} ${xs + r} ${y}` + (merged ? `H${xe - r}Q${xe} ${y} ${xe} ${MAIN}` : `H${xn}`);
+        const future = merged ? "" : `M${xn} ${y}H${xe - r}Q${xe} ${y} ${xe} ${MAIN}`;
+        // label rides along the branch on its outer side, or sits beside a short one
+        const fits = xe - xs - 2 * r - 10 > br.id.length * CH;
+        const lx = fits ? xs + r + 6 : xe + 7;
+        const ly = fits ? y + (dir < 0 ? -8 : 17) : y + 4;
+        g += `
+          <g class="xg-br t-${br.type}" data-target="${esc(br.target)}" data-branch="${esc(br.id)}" style="--i:${i}" tabindex="0" role="link" aria-label="${esc(br.title)}, ${esc(br.dates)}">
+            <title>${esc(br.title)} · ${esc(br.dates)}</title>
+            <path class="xg-hit" d="${past}${future}"/>
+            <path class="xg-line draw" d="${past}"/>
+            ${future ? `<path class="xg-line future" d="${future}"/>` : ""}
+            <circle class="xg-dot" cx="${xs}" cy="${MAIN}" r="3.5"/>
+            ${merged ? `<circle class="xg-dot" cx="${xe}" cy="${MAIN}" r="3.5"/>` : ""}
+            ${br.commits.map((c) => `<circle class="xg-dot xg-commit" cx="${x(c.t)}" cy="${y}" r="4"><title>${esc(c.title)}</title></circle>`).join("")}
+            <text class="xg-label" x="${lx}" y="${ly}">${esc(br.id)}</text>
+          </g>`;
+      });
+      g += `<g class="xg-head"><circle class="xg-pulse" cx="${xn}" cy="${MAIN}" r="6"/><circle class="xg-headdot" cx="${xn}" cy="${MAIN}" r="5"/><text x="${xn + 10}" y="${MAIN - 7}">HEAD</text></g>`;
+      xgWrap.innerHTML = `<svg class="xg${drawn ? " on static" : ""}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="group" aria-label="Career timeline, ${t0} to ${t1}">${g}</svg>`;
+      $$(".draw", xgWrap).forEach((path) => path.style.setProperty("--len", Math.ceil(path.getTotalLength()) + 2));
+      if (xgWrap.scrollWidth > xgWrap.clientWidth) xgWrap.scrollLeft = xgWrap.scrollWidth; // phones: start at "now"
+    }
+
+    function play() {
+      if (drawn) return;
+      drawn = true;
+      const svg = $("svg", xgWrap);
+      if (reduceMotion) return svg.classList.add("on", "static");
+      svg.getBoundingClientRect(); // commit the undrawn state so the transition runs
+      requestAnimationFrame(() => svg.classList.add("on"));
+    }
+
+    renderGraph();
+    if ("IntersectionObserver" in window) {
+      const gio = new IntersectionObserver((en) => {
+        if (en.some((e) => e.isIntersecting)) {
+          play();
+          gio.disconnect();
+        }
+      }, { threshold: 0.35 });
+      gio.observe(xgWrap);
+    } else play();
+
+    let rt = null;
+    addEventListener("resize", () => {
+      clearTimeout(rt);
+      rt = setTimeout(renderGraph, 150);
+    });
+
+    // hovering a branch lights up its log entry, and vice versa; click jumps to it
+    const hot = (id, on) => {
+      $$(`[data-branch="${id}"]`).forEach((el) => el.classList.toggle("hot", on));
+    };
+    const over = (e) => {
+      const el = e.target.closest?.("[data-branch]");
+      if (el) hot(el.dataset.branch, e.type === "mouseover" || e.type === "focusin");
+    };
+    ["mouseover", "mouseout", "focusin", "focusout"].forEach((t) => {
+      xgWrap.addEventListener(t, over);
+      gitlog?.addEventListener(t, over);
+    });
+    const jump = (br) => {
+      const target = document.getElementById(br.dataset.target);
+      if (!target) return;
+      target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      const flashEl = target.id === "about" ? $("#about .code-win") : target;
+      flashEl?.classList.remove("flash");
+      void flashEl?.offsetWidth;
+      flashEl?.classList.add("flash");
+    };
+    xgWrap.addEventListener("click", (e) => {
+      const br = e.target.closest(".xg-br");
+      if (br) jump(br);
+    });
+    xgWrap.addEventListener("keydown", (e) => {
+      const br = e.target.closest(".xg-br");
+      if (br && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        jump(br);
+      }
+    });
   }
 
   // ------------------------------------------------------------- projects --
