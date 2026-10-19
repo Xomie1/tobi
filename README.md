@@ -26,15 +26,22 @@ I build backend systems and AI pipelines, and I turn messy operational data into
 - Reconciled **1,000+ flight records** alongside Air Traffic Control to maintain data integrity.
 - Retained beyond the mandatory NYSC service year based on performance.
 
+**Software Engineering Intern** — *National Institute of Information Technology (NIIT)*
+`Sep 2022 – Nov 2022`
+- Wrote Python automation scripts for data processing and workflow optimisation; collaborated on predictive analytics projects.
+
+**IT Technician (Intern)** — *Federal Airports Authority of Nigeria (FAAN)*
+`Sep 2021 – Nov 2021`
+- Maintained airport IT infrastructure, reducing system downtime by 20%.
+
 ---
 
 ## 🚀 Projects
 
 | Project | What it does | Stack |
 |---|---|---|
-| **Job Application Bot** | Automates LinkedIn/Indeed job applications with a monitoring dashboard | Python, FastAPI, Playwright, Telegram, GitHub Actions |
+| **Job Alert Bot** | Scrapes Irish job boards, scores every listing for fit and sends strong matches to Telegram (alerts only) | Python, Playwright, FastAPI, Telegram, GitHub Actions |
 | **Real-Time TTS Streaming System** | Streams synthesized speech with chunked audio over WebSockets | FastAPI, WebSockets, Qwen3-TTS |
-| **CV Rewriter & Job Intelligence Tool** | AI-tailored CV rewriting plus a 66-company application tracker | Python, Claude API |
 | [**RentMag**](https://github.com/Xomie1/Rent-magazine) | Desktop app that batch-processes property photos for a rental magazine (360° detection, retouch, logo, Google Sheets lookup) | Python, PyQt5, Pillow |
 | [**Stock Analysis Dashboard**](https://github.com/Xomie1) | Analyzes and visualizes stock market data | Python, pandas |
 | [**Finance Automation Tool**](https://github.com/Xomie1/Finance-Automation-Tool) | Automates financial reporting from Excel into Google Sheets, saving 10+ hrs/week | Excel, Google Apps Script |

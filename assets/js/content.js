@@ -39,20 +39,28 @@ window.SITE = {
     dribbble: "https://dribbble.com/xomie1",
     cv: "https://drive.google.com/uc?export=download&id=1kQBmWtveRVPfmy3LCmrrSRwcLJtJhtdh",
     photo: "assets/img/profile/profile-pic.jpg",
+    pixel: "assets/img/profile/pixel.png", // 48x64, 4 shades; tinted per theme in CSS
     source: "https://github.com/Xomie1/tobi",
   },
 
+  // Experience and education feed the animated branch graph on the page:
+  // each entry is a git branch from `start` to `end` ("YYYY-MM" or "YYYY").
+  // type: "work" | "intern" (education entries are drawn as "edu").
   experience: [
     {
       id: "trivera-labs",
       role: "Backend Software Engineer & Sprint Lead",
       org: "Trivera Labs",
-      note: "MSc academic practicum",
+      note: "MSc practicum · Dublin, Ireland",
+      start: "2026-01",
+      end: "2026-03",
       dates: "Jan – Mar 2026",
+      type: "work",
       bullets: [
-        "Built a production RAG pipeline: FastAPI backend, hybrid BM25 + ChromaDB vector search fused with Reciprocal Rank Fusion.",
+        "Built the hybrid retrieval pipeline behind an AI document query system: FastAPI backend, BM25 keyword search and ChromaDB vector search fused with Reciprocal Rank Fusion.",
+        "Engineered document ingestion for PDF, DOCX, TXT and Markdown: automated chunking, embedding generation and indexed storage.",
         "Served Qwen2.5 through Ollama with Kokoro TTS for spoken answers. Fully offline, no external API calls.",
-        "Delivered to external client NexusGuard across 3 Agile sprints as sprint lead on a 9-person team.",
+        "Led Sprint 2 of 3 weekly sprints on a 9-person Agile team, delivering to external client NexusGuard.",
       ],
       stack: ["fastapi", "rag", "chromadb", "bm25", "ollama", "kokoro-tts"],
       project: "ai-lecture-explainer",
@@ -61,26 +69,91 @@ window.SITE = {
       id: "nama",
       role: "Data Analyst",
       org: "Nigerian Airspace Management Agency (NAMA)",
+      note: "Ikeja, Nigeria · 17 months",
+      start: "2024-08",
+      end: "2025-12",
       dates: "Aug 2024 – Dec 2025",
-      bullets: [
-        "Automated KPI dashboards for senior management with Python and Google Apps Script, cutting manual reporting effort by 30%.",
-        "Reconciled 1,000+ flight records alongside Air Traffic Control to keep operational data accurate.",
-        "Retained beyond the mandatory NYSC service year based on performance.",
+      type: "work",
+      // a role with phases renders as one branch with a commit per phase
+      phases: [
+        {
+          title: "Retained as a permanent analyst",
+          dates: "Jun – Dec 2025",
+          at: "2025-06",
+          bullets: [
+            "Kept on after the NYSC year ended, based on performance.",
+            "Owned the monthly KPI dashboard suite for senior management and automated recurring reports with Python and Google Apps Script, cutting manual effort by 30%.",
+            "Maintained data governance and accuracy standards across sensitive aviation datasets.",
+          ],
+        },
+        {
+          title: "NYSC placement",
+          dates: "Aug 2024 – Jun 2025",
+          bullets: [
+            "Worked with Air Traffic Control to streamline flight data collection and validation across 1,000+ flight records.",
+            "Reconciled entry/exit timestamps and found missing data in flight schedule and overpass datasets, improving reporting efficiency by 20%.",
+            "First point of contact for flight data discrepancy queries, resolved within agreed SLAs.",
+            "Reworked data entry workflows: 30% less manual input time and 25% better accuracy.",
+          ],
+        },
       ],
-      stack: ["python", "google-apps-script", "kpi-dashboards"],
+      stack: ["python", "google-apps-script", "excel", "kpi-dashboards"],
+    },
+    {
+      id: "niit",
+      role: "Software Engineering Intern",
+      org: "National Institute of Information Technology (NIIT)",
+      note: "Nigeria",
+      start: "2022-09",
+      end: "2022-11",
+      dates: "Sep – Nov 2022",
+      type: "intern",
+      bullets: [
+        "Wrote Python automation scripts for data processing and workflow optimisation.",
+        "Collaborated on predictive analytics projects.",
+      ],
+      stack: ["python", "automation"],
+    },
+    {
+      id: "faan",
+      role: "IT Technician (Intern)",
+      org: "Federal Airports Authority of Nigeria (FAAN)",
+      note: "Lagos, Nigeria",
+      start: "2021-09",
+      end: "2021-11",
+      dates: "Sep – Nov 2021",
+      type: "intern",
+      bullets: [
+        "Maintained airport IT infrastructure, reducing system downtime by 20%.",
+        "Resolved staff IT issues, improving internal satisfaction by 25%.",
+      ],
+      stack: ["it-infrastructure", "support"],
     },
   ],
 
   education: [
     {
+      id: "msc",
       school: "Griffith College Dublin",
       degree: "MSc Computer Science",
-      dates: "Feb 2026 – Jun 2027",
-      note: "graduating Sep 2027",
+      start: "2026-02",
+      end: "2027-09",
+      dates: "Feb 2026 – Sep 2027",
+      note: "expected Sep 2027",
+      modules: [
+        "Cloud Platforms & Applications",
+        "Networks & Cybersecurity",
+        "Machine Learning",
+        "Data Engineering",
+        "Software Architecture",
+      ],
     },
     {
+      id: "bsc",
       school: "Chrisland University",
       degree: "BSc Computer Science, First Class Honours",
+      start: "2019",
+      end: "2023",
       dates: "2019 – 2023",
       note: "GPA 4.51 / 5.0",
       awards: [
@@ -93,7 +166,7 @@ window.SITE = {
   ],
 
   certifications: [
-    "Data Analytics Professional Certificate",
+    "Google Data Analytics Professional Certificate",
     "New Horizon Machine Learning Certificate",
   ],
 
@@ -181,19 +254,20 @@ window.SITE = {
     },
     {
       slug: "job-bot",
-      name: "Job Application Bot",
+      name: "Job Alert Bot",
       year: "2026",
       status: "active",
       featured: true,
-      tags: ["automation", "ai", "backend"],
+      tags: ["automation", "backend"],
       summary:
-        "Finds, scores and applies to jobs: LinkedIn and Indeed auto-apply plus an Irish job-board scraper that sends Telegram alerts.",
+        "Scrapes Irish job boards twice a week, scores every listing for fit and sends only the strong matches to Telegram. Alerts only, it never applies.",
       details: [
-        "Playwright drives LinkedIn Easy Apply and Indeed; the Claude API scores fit and writes a tailored cover letter per role.",
-        "A niche scraper runs 21 searches across ie.indeed.com and irishjobs.ie, scores each job 0–100 and recommends which CV to send.",
-        "Cross-run de-duplication, a FastAPI monitoring dashboard, and GitHub Actions schedules for applying and scraping.",
+        "Playwright runs 21 searches across ie.indeed.com and irishjobs.ie on a GitHub Actions schedule, every Monday and Thursday morning.",
+        "Scores each job 0–100 from skills, seniority and location keywords and flags a watchlist of priority companies, with no API cost.",
+        "Only jobs scoring 55+ trigger a Telegram alert, and cross-run de-duplication means the same job never alerts twice.",
+        "A FastAPI dashboard shows the searches and a table of every job found.",
       ],
-      stack: ["Python", "Playwright", "Claude API", "FastAPI", "GitHub Actions", "Telegram"],
+      stack: ["Python", "Playwright", "FastAPI", "GitHub Actions", "Telegram Bot API"],
       private: true,
     },
     {
@@ -281,16 +355,6 @@ window.SITE = {
       private: true,
     },
     {
-      slug: "cv-rewriter",
-      name: "CV Rewriter & Job Intelligence",
-      year: "2026",
-      status: "shipped",
-      tags: ["ai", "automation"],
-      summary: "AI-powered CV tailoring tool paired with a 66-company application tracker.",
-      stack: ["Python", "Claude API"],
-      private: true,
-    },
-    {
       slug: "expenses",
       name: "Expenses",
       year: "2023",
@@ -318,6 +382,17 @@ window.SITE = {
         "Containerised full-stack to-do app: React front end, Express API and MongoDB, all started with one docker-compose command.",
       stack: ["React", "Node.js", "Express", "MongoDB", "Docker"],
       repo: "https://github.com/Xomie1/task-management",
+    },
+    {
+      slug: "vba-construction",
+      name: "Construction Management System",
+      status: "shipped",
+      tags: ["automation", "data"],
+      context: "freelance · Japanese client",
+      summary:
+        "Bespoke multi-sheet P&L automation and project management system in Excel, with Japanese-language macro interfaces and automated reporting.",
+      stack: ["Excel", "VBA", "Power Query"],
+      private: true,
     },
     {
       slug: "maui-app",
@@ -403,6 +478,15 @@ window.SITE = {
       summary: "Validated types, standardised text fields and removed duplicates from a bike retailer's sales table in SQL.",
       stack: ["SQL Server", "T-SQL"],
       repo: "https://github.com/Xomie1/Bike_Store-Analysis",
+    },
+    {
+      slug: "power-query",
+      name: "Power Query Reporting",
+      status: "shipped",
+      tags: ["data"],
+      summary:
+        "Excel Power Query solution that consolidates several data sources, cleans them and produces structured reports automatically.",
+      stack: ["Excel", "Power Query"],
     },
     {
       slug: "superstore-tableau",
@@ -664,9 +748,10 @@ window.SITE = {
     languages: ["Python", "SQL", "JavaScript", "TypeScript", "C#"],
     backend: ["FastAPI", "Flask", "Django", "Express", "REST", "WebSockets", "SSE"],
     ai_ml: ["RAG", "LLM integration", "Ollama", "Claude API", "ChromaDB", "BM25", "Whisper", "Kokoro TTS", "scikit-learn", "librosa"],
-    data: ["pandas", "NumPy", "SQL Server", "Excel", "Power Query", "Tableau", "Google Apps Script"],
+    data: ["pandas", "NumPy", "SQL Server", "PostgreSQL", "Excel", "Power Query", "Tableau", "Google Apps Script"],
     automation: ["Playwright", "BeautifulSoup", "GitHub Actions", "Google Sheets API"],
     desktop: ["PyQt5", ".NET MAUI", "WinForms"],
-    infra: ["Docker", "Git", "MongoDB", "SQLite", "Firebase", "Heroku"],
+    infra: ["Docker", "Git", "Google Cloud", "MongoDB", "SQLite", "Firebase", "Heroku"],
+    ways_of_working: ["Agile / Scrum", "stakeholder reporting", "data governance"],
   },
 };

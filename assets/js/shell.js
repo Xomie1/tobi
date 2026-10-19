@@ -25,7 +25,7 @@
   const writeups = SITE.writeups;
   const live = projects.filter((p) => !p.archived);
 
-  let cwd = "~";
+  let cwd = []; // path segments below ~, e.g. ["projects", "vibe-dj"]
   const history = [];
   let hIndex = 0;
   let booting = false;
@@ -43,17 +43,16 @@
   const link = (href, label, ext = true) =>
     `<a href="${esc(href)}"${ext ? ' target="_blank" rel="noopener"' : ""}>${esc(label)}</a>`;
   const prompt = () =>
-    `<span class="ps-user">${esc(prof.user)}</span>@<span class="ps-host">${esc(prof.host)}</span>:<span class="ps-dir">${esc(cwd)}</span><span class="ps-sym">$</span> `;
+    `<span class="ps-user">${esc(prof.user)}</span>@<span class="ps-host">${esc(prof.host)}</span>:<span class="ps-dir">${esc(pathStr(cwd))}</span><span class="ps-sym">$</span> `;
   const scrollDown = () => (body.scrollTop = body.scrollHeight);
   const pad = (s, n) => String(s).padEnd(n, " ");
 
-  function setCwd(dir) {
-    cwd = dir;
-    cwdLabel.textContent = dir;
-  }
-
   // ------------------------------------------------------- file system --
-  const DIRS = { "~": "top", "~/projects": "projects", "~/writeups": "writeups" };
+  // A small virtual tree over content.js:
+  //   ~/about.md  experience.log  roadmap.todo  skills.json  contact.sh  cv.pdf
+  //   ~/projects/<slug>/README.md  [writeup.md]     (archived ones: ls -a)
+  //   ~/writeups/<slug>.md   ~/writeups/drafts/<slug>.md
+  const HOME = "/home/" + prof.user;
   const SECTION_FILES = {
     "about.md": "about",
     "experience.log": "experience",
@@ -61,39 +60,112 @@
     "skills.json": "skills",
     "contact.sh": "contact",
   };
+  const published = writeups.filter((w) => !w.draft);
+  const drafts = writeups.filter((w) => w.draft);
+  const projectWriteup = (p) => p.writeup && published.find((w) => w.slug === p.writeup);
+  const pathStr = (segs) => (segs.length ? "~/" + segs.join("/") : "~");
 
-  function normPath(arg) {
-    if (!arg || arg === "~" || arg === "/" || arg === "~/") return "~";
-    let a = arg.replace(/^\.\//, "").replace(/\/+$/, "");
-    if (a === ".") return cwd;
-    if (a === "..") return "~";
-    if (a.startsWith("~/")) return a;
-    if (cwd !== "~") return `${cwd}/${a}`;
-    return `~/${a}`;
+  function setCwd(segs) {
+    cwd = segs;
+    cwdLabel.textContent = pathStr(segs);
+  }
+
+  // "../x", "~/x", "/home/tobi/x", "x" -> segments below ~, or null if it leaves ~
+  function toSegs(arg) {
+    let a = String(arg ?? "").trim();
+    let segs;
+    if (!a || a === "~" || a === HOME || a === HOME + "/") return [];
+    if (a.startsWith("~/")) (segs = []), (a = a.slice(2));
+    else if (a.startsWith(HOME + "/")) (segs = []), (a = a.slice(HOME.length + 1));
+    else if (a.startsWith("/")) return null;
+    else segs = [...cwd];
+    for (const part of a.split("/")) {
+      if (!part || part === ".") continue;
+      if (part === "..") {
+        if (!segs.length) return null;
+        segs.pop();
+      } else segs.push(part);
+    }
+    return segs;
+  }
+
+  function nodeAt(segs) {
+    if (!segs) return null;
+    const [a, b, c] = segs;
+    if (!segs.length) return { dir: true, kind: "home" };
+    if (segs.length === 1) {
+      if (a === "projects") return { dir: true, kind: "projects" };
+      if (a === "writeups") return { dir: true, kind: "writeups" };
+      if (SECTION_FILES[a]) return { kind: "section", id: SECTION_FILES[a] };
+      if (a === "cv.pdf") return { kind: "cv" };
+      if (a === ".secrets") return { kind: "secrets" };
+      return null;
+    }
+    if (a === "projects") {
+      const p = projects.find((x) => x.slug === b);
+      if (!p) return null;
+      if (segs.length === 2) return { dir: true, kind: "project", p };
+      if (segs.length === 3 && c === "README.md") return { kind: "readme", p };
+      if (segs.length === 3 && c === "writeup.md" && projectWriteup(p)) return { kind: "writeup", w: projectWriteup(p) };
+      return null;
+    }
+    if (a === "writeups") {
+      if (segs.length === 2 && b === "drafts") return { dir: true, kind: "drafts" };
+      if (segs.length === 2) {
+        const w = published.find((x) => x.slug + ".md" === b);
+        return w ? { kind: "writeup", w } : null;
+      }
+      if (segs.length === 3 && b === "drafts") {
+        const w = drafts.find((x) => x.slug + ".md" === c);
+        return w ? { kind: "draft", w } : null;
+      }
+    }
+    return null;
+  }
+
+  // entries of a directory: { name, dir, hidden }
+  function children(segs) {
+    const n = nodeAt(segs);
+    if (!n?.dir) return [];
+    switch (n.kind) {
+      case "home":
+        return [
+          { name: "projects", dir: true },
+          { name: "writeups", dir: true },
+          ...Object.keys(SECTION_FILES).map((name) => ({ name })),
+          { name: "cv.pdf" },
+          { name: ".secrets", hidden: true },
+        ];
+      case "projects":
+        return projects.map((p) => ({ name: p.slug, dir: true, hidden: !!p.archived }));
+      case "project":
+        return [{ name: "README.md" }, ...(projectWriteup(n.p) ? [{ name: "writeup.md" }] : [])];
+      case "writeups":
+        return [...published.map((w) => ({ name: w.slug + ".md" })), { name: "drafts", dir: true }];
+      case "drafts":
+        return drafts.map((w) => ({ name: w.slug + ".md" }));
+    }
+    return [];
+  }
+
+  // `cat vibe-dj`, `open about` and friends keep working from anywhere
+  function findByName(arg) {
+    const name = String(arg || "").replace(/\/$/, "").replace(/\.md$/, "");
+    const p = projects.find((x) => x.slug === name);
+    if (p) return { dir: true, kind: "project", p, segs: ["projects", p.slug] };
+    const w = writeups.find((x) => x.slug === name);
+    if (w) return { kind: w.draft ? "draft" : "writeup", w };
+    const file = Object.keys(SECTION_FILES).find((f) => f === arg || f.split(".")[0] === name);
+    if (file) return { kind: "section", id: SECTION_FILES[file], segs: [file] };
+    if (name === "projects" || name === "writeups") return { dir: true, kind: name, segs: [name] };
+    return null;
   }
 
   function resolve(arg) {
-    const path = normPath(arg);
-    if (DIRS[path]) return { type: "dir", path };
-    const rel = path.replace(/^~\//, "");
-    if (SECTION_FILES[rel]) return { type: "section", file: rel, id: SECTION_FILES[rel] };
-    let m = rel.match(/^projects\/([\w-]+)$/);
-    if (m) {
-      const p = projects.find((x) => x.slug === m[1]);
-      if (p) return { type: "project", p };
-    }
-    m = rel.match(/^writeups\/([\w-]+?)(\.md)?$/);
-    if (m) {
-      const w = writeups.find((x) => x.slug === m[1]);
-      if (w) return { type: "writeup", w };
-    }
-    // bare slug from anywhere
-    const p = projects.find((x) => x.slug === arg.replace(/\/$/, ""));
-    if (p) return { type: "project", p };
-    const w = writeups.find((x) => x.slug === arg.replace(/\.md$/, ""));
-    if (w) return { type: "writeup", w };
-    if (rel === "cv.pdf") return { type: "cv" };
-    return null;
+    const segs = toSegs(arg);
+    const n = nodeAt(segs);
+    if (n) return { ...n, segs };
+    return findByName(arg);
   }
 
   // ---------------------------------------------------------- printers --
@@ -108,7 +180,7 @@
       .join("");
     // trimmed: .t-line is pre-wrap, so template indentation would render as blank lines
     line(`<div class="neofetch">
-        <div class="nf-photo"><img src="${esc(prof.photo)}" alt="Photo of Tobi" width="132" height="176" /></div>
+        <div class="nf-photo"><canvas class="nf-pixel" width="48" height="64" role="img" aria-label="Pixel-art portrait of Tobi" title="click to redraw"></canvas></div>
         <div class="nf-info">
           <div class="nf-title">${esc(prof.user)}<span>@</span>${esc(prof.host)}</div>
           <div class="nf-rule">${"-".repeat(prof.user.length + prof.host.length + 1)}</div>
@@ -124,6 +196,48 @@
           <div class="nf-swatches" aria-hidden="true">${sw}</div>
         </div>
       </div>`.trim());
+    pixelReveal(out.lastElementChild.querySelector(".nf-pixel"));
+  }
+
+  // draws the 48x64 portrait coarse-to-fine, like an image decoding over a slow link
+  function pixelReveal(canvas) {
+    if (!canvas) return;
+    const img = new Image();
+    img.onload = () => {
+      const W = img.naturalWidth;
+      const H = img.naturalHeight;
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext("2d");
+      const tmp = document.createElement("canvas");
+      const steps = reduceMotion ? [W] : [3, 6, 12, 24, W];
+      let i = 0;
+      const draw = () => {
+        const s = steps[i];
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, W, H);
+        if (s >= W) ctx.drawImage(img, 0, 0);
+        else {
+          const sh = Math.max(1, Math.round((s * H) / W));
+          tmp.width = s;
+          tmp.height = sh;
+          const t = tmp.getContext("2d");
+          t.imageSmoothingEnabled = false;
+          t.drawImage(img, 0, 0, s, sh);
+          ctx.drawImage(tmp, 0, 0, s, sh, 0, 0, W, H);
+        }
+        if (++i < steps.length) setTimeout(draw, 160);
+      };
+      draw();
+    };
+    img.src = prof.pixel;
+    if (!canvas.dataset.wired) {
+      canvas.dataset.wired = "1";
+      canvas.addEventListener("click", (e) => {
+        e.stopPropagation();
+        pixelReveal(canvas);
+      });
+    }
   }
 
   function listProjects(opts = {}) {
@@ -140,7 +254,7 @@
     }
     const hidden = projects.filter((p) => p.archived).length;
     line(
-      `<span class="t-faint">${items.length} items${!opts.all && hidden ? ` · ${hidden} archived hidden (${run("ls -a projects", "ls -a")})` : ""} · click one, or try ${run("open vibe-dj")}</span>`
+      `<span class="t-faint">${items.length} items${!opts.all && hidden ? ` · ${hidden} archived hidden (${run("ls -a projects", "ls -a")})` : ""} · click one, or try ${run("cd ~/projects/vibe-dj", "cd vibe-dj")}</span>`
     );
   }
 
@@ -169,13 +283,18 @@
         line(`<span class="t-ok"># about</span>`);
         line("I build backend systems and AI pipelines, and I turn messy operational data into automated reporting that people actually trust.");
         line("Started by pulling Excel sheets apart, which grew into automation and then full applications: FastAPI services, RAG assistants and desktop tools.", "t-dim");
-        line(`${run("cd about", "→ read the full about.md")}`);
+        line(run("open about", "→ read the full about.md"));
         break;
       case "experience":
         SITE.experience.forEach((x) => {
           line(`<span class="t-warn">${esc(x.dates)}</span>  <b>${esc(x.role)}</b> <span class="t-dim">@ ${esc(x.org)}</span>`);
-          x.bullets.forEach((b) => line(`  <span class="t-ok">+</span> ${esc(b)}`, "t-dim"));
+          (x.phases || [{ bullets: x.bullets }]).forEach((g) => {
+            if (g.title) line(`  <span class="t-info">↳ ${esc(g.title)}</span> <span class="t-faint">${esc(g.dates)}</span>`);
+            g.bullets.forEach((b) => line(`    <span class="t-ok">+</span> ${esc(b)}`, "t-dim"));
+          });
         });
+        SITE.education.forEach((e) => line(`<span class="t-mag">${esc(e.dates)}</span>  <b>${esc(e.degree)}</b> <span class="t-dim">@ ${esc(e.school)}</span>`));
+        line(run("open experience", "→ see it as a graph"));
         break;
       case "roadmap":
         roadmap();
@@ -216,11 +335,12 @@
     ["help", "show this list"],
     ["whoami", "the short version"],
     ["neofetch", "system info, the classic"],
-    ["ls [dir]", "list ~, projects/ or writeups/  (ls -a shows the archive)"],
-    ["cd <dir>", "jump to a section: about, projects, writeups, roadmap, contact…"],
-    ["cat <file>", "print about.md, roadmap.todo, a project or a write-up"],
+    ["ls [path]", "list a directory (ls -a shows hidden and archived)"],
+    ["cd <dir>", "move around: cd projects, cd vibe-dj, cd .., cd ~"],
+    ["pwd", "where am I?"],
+    ["cat <file>", "print a file: cat about.md, cat README.md"],
+    ["open <name>", "show it on the page: open about, open vibe-dj, open ."],
     ["man <name>", "a project's manual page, e.g. man vibe-dj"],
-    ["open <name>", "open a project or a write-up"],
     ["projects [tag]", "list projects, e.g. projects ai"],
     ["writeups", "list write-ups"],
     ["roadmap", "projects yet to come"],
@@ -246,76 +366,109 @@
     },
     neofetch,
     ls(args) {
-      const all = args.includes("-a") || args.includes("-la") || args.includes("-al");
+      const all = args.some((a) => /^-\w*a/.test(a));
       const long = args.some((a) => /^-\w*l/.test(a));
       const target = args.find((a) => !a.startsWith("-"));
-      const path = target ? normPath(target) : cwd;
-      if (path === "~/projects") {
+      const r = target ? resolve(target) : { ...nodeAt(cwd), segs: cwd };
+      if (!r) return line(`ls: cannot access '${esc(target)}': No such file or directory`, "t-err");
+      if (!r.dir) return line(esc(target));
+      if (r.kind === "projects") {
         if (all) P.setArchive?.(true);
         return listProjects({ all, long });
       }
-      if (path === "~/writeups") return listWriteups();
-      if (path === "~") {
-        const dirs = [run("cd projects", "projects/"), run("cd writeups", "writeups/")];
-        const files = Object.keys(SECTION_FILES).map((f) => run("cat " + f, f));
-        files.push(run("cv", "cv.pdf"));
-        if (all) files.unshift(`<span class="t-faint">.secrets</span>`);
-        return line([...dirs, ...files].join("  "));
-      }
-      const r = resolve(target || "");
-      if (r?.type === "project") return line(`${run("open " + r.p.slug, "README.md")}  <span class="t-faint">(${esc(r.p.stack?.join(", "))})</span>`);
-      line(`ls: cannot access '${esc(target)}': No such file or directory`, "t-err");
+      const entries = children(r.segs).filter((e) => all || !e.hidden);
+      const item = (e) => {
+        const abs = pathStr([...r.segs, e.name]);
+        const label = e.name + (e.dir ? "/" : "");
+        if (e.name === "cv.pdf") return run("cv", label);
+        if (e.name === ".secrets") return `<span class="t-faint">${label}</span>`;
+        return run((e.dir ? "cd " : "cat ") + abs, label);
+      };
+      if (long) entries.forEach((e) => line(`<span class="t-faint">${e.dir ? "drwxr-xr-x" : "-rw-r--r--"}  ${esc(prof.user)}  </span>${item(e)}`));
+      else line(entries.map(item).join("  "));
+      if (r.kind === "project" && r.p.repo) line(`<span class="t-faint"># source:</span> ${link(r.p.repo, r.p.repo.replace("https://", ""))}`);
     },
     cd(args) {
       const target = args[0];
-      const path = normPath(target);
-      if (DIRS[path]) {
-        setCwd(path);
-        P.go(DIRS[path]);
-        return;
+      if (!target || target === "~") return setCwd([]);
+      const segs = toSegs(target);
+      if (segs === null) return line(`cd: ${esc(target)}: this machine only has ~ (${HOME})`, "t-err");
+      let n = nodeAt(segs) && { ...nodeAt(segs), segs };
+      if (!n) {
+        // a project name works from anywhere: cd vibe-dj
+        const f = findByName(target);
+        if (f?.dir) n = f;
+        else if (f) n = { ...f, segs: f.segs || [] };
       }
-      // sections are files in ~, so `cd about` works from any directory
-      const name = String(target).replace(/^(~|\.)\//, "").replace(/\/$/, "").replace(/\.\w+$/, "");
-      const ids = ["about", "experience", "projects", "writeups", "roadmap", "skills", "contact"];
-      const id = ids.find((x) => x === name || x.startsWith(name));
-      if (name && id) {
-        setCwd("~");
-        P.go(id);
-        line(`<span class="t-faint">→ scrolled to ${esc(id)}</span>`);
-        return;
+      if (!n) return line(`cd: no such file or directory: ${esc(target)}`, "t-err");
+      if (!n.dir) {
+        const hint = n.kind === "section" ? `${run("cat ~/" + n.segs[0], "cat " + n.segs[0])} or ${run("open " + n.id)}` : run("cat " + target);
+        return line(`cd: not a directory: ${esc(target)}. try ${hint}`, "t-err");
       }
-      line(`cd: no such file or directory: ${esc(target)}`, "t-err");
+      setCwd(n.segs);
+      if (n.kind === "project") {
+        const files = children(n.segs).map((e) => e.name).join("  ");
+        line(
+          `<span class="t-faint">${esc(files)}   # try</span> ${run(`cat ~/projects/${n.p.slug}/README.md`, "cat README.md")} <span class="t-faint">or</span> ${run("open " + n.p.slug, "open .")}`
+        );
+      }
     },
     cat(args) {
-      if (!args.length) return line("usage: cat &lt;file&gt;   e.g. " + run("cat about.md"), "t-dim");
-      if (args[0] === ".secrets") return line("there are no secrets. only side projects.", "t-warn");
+      if (!args.length) return line("usage: cat &lt;file&gt;   e.g. " + run("cat ~/about.md", "cat about.md"), "t-dim");
       const r = resolve(args[0]);
       if (!r) return line(`cat: ${esc(args[0])}: No such file or directory`, "t-err");
-      if (r.type === "dir") return line(`cat: ${esc(args[0])}: Is a directory. try ${run("ls " + args[0])}`, "t-err");
-      if (r.type === "section") return catSection(r.id);
-      if (r.type === "project") return catProject(r.p);
-      if (r.type === "cv") return line(`cat: cv.pdf: binary file. try ${run("cv")} instead`, "t-warn");
-      if (r.type === "writeup") {
-        line(`<span class="t-ok"># ${esc(r.w.title)}</span>`);
-        line(esc(r.w.summary), "t-dim");
-        line(r.w.draft ? `<span class="t-warn">still a draft. check back soon.</span>` : run("open " + r.w.slug, "→ read it"));
+      switch (r.kind) {
+        case "project":
+          line(`<span class="t-faint">(${esc(r.p.slug)}/ is a directory, showing its README.md)</span>`);
+          return catProject(r.p);
+        case "readme":
+          return catProject(r.p);
+        case "section":
+          return catSection(r.id);
+        case "cv":
+          return line(`cat: cv.pdf: binary file. try ${run("cv")} instead`, "t-warn");
+        case "secrets":
+          return line("there are no secrets. only side projects.", "t-warn");
+        case "writeup":
+          line(`<span class="t-ok"># ${esc(r.w.title)}</span>`);
+          line(esc(r.w.summary), "t-dim");
+          return line(run("open " + r.w.slug, "→ read it"));
+        case "draft":
+          line(`<span class="t-ok"># ${esc(r.w.title)}</span>  <span class="t-warn">(draft)</span>`);
+          return line(esc(r.w.summary), "t-dim");
+        default:
+          return line(`cat: ${esc(args[0])}: Is a directory. try ${run("ls " + args[0])}`, "t-err");
       }
     },
     open(args) {
-      if (!args.length) return line("usage: open &lt;project|write-up&gt;", "t-dim");
-      const r = resolve(args[0]);
-      if (r?.type === "project") {
-        P.openProject(r.p.slug);
-        return line(`<span class="t-faint">opened ~/projects/${esc(r.p.slug)}</span>`);
+      const target = args[0] ?? ".";
+      const r = resolve(target);
+      if (!r) return line(`open: ${esc(target)}: not found. try ${run("ls ~/projects", "ls projects")}`, "t-err");
+      switch (r.kind) {
+        case "project":
+        case "readme":
+          P.openProject(r.p.slug);
+          return line(`<span class="t-faint">opened man ${esc(r.p.slug)}</span>`);
+        case "writeup":
+          line(`<span class="t-faint">opening ${esc(r.w.slug)}.md…</span>`);
+          location.href = P.writeupUrl(r.w.slug);
+          return;
+        case "draft":
+          return line("that one is still a draft.", "t-warn");
+        case "section":
+          P.go(r.id);
+          return line(`<span class="t-faint">→ scrolled to ${esc(r.id)}</span>`);
+        case "projects":
+        case "writeups":
+          P.go(r.kind);
+          return line(`<span class="t-faint">→ scrolled to ${esc(r.kind)}</span>`);
+        case "drafts":
+          return P.go("writeups");
+        case "cv":
+          return COMMANDS.cv();
+        default:
+          return P.go("top");
       }
-      if (r?.type === "writeup") {
-        if (r.w.draft) return line("that one is still a draft.", "t-warn");
-        line(`<span class="t-faint">opening ${esc(r.w.slug)}.md…</span>`);
-        location.href = P.writeupUrl(r.w.slug);
-        return;
-      }
-      if (r?.type === "section") return P.go(r.id);
-      line(`open: ${esc(args[0])}: not found. try ${run("ls projects")}`, "t-err");
     },
     projects(args) {
       listProjects({ tag: args[0] });
@@ -357,7 +510,7 @@
       P.setTheme("phosphor");
       line("wake up, neo… (theme → phosphor)", "t-ok");
     },
-    pwd: () => line(cwd.replace("~", "/home/" + prof.user)),
+    pwd: () => line(HOME + (cwd.length ? "/" + cwd.join("/") : "")),
     date: () => line(new Date().toString()),
     echo: (args) => line(esc(args.join(" "))),
     uptime() {
@@ -421,20 +574,31 @@
   }
 
   // ---------------------------------------------------- tab completion --
+  // completes paths relative to the current directory, like a real shell
+  function pathCandidates(cur, dirsOnly = false) {
+    const i = cur.lastIndexOf("/");
+    const dirPart = i >= 0 ? cur.slice(0, i + 1) : "";
+    const segs = dirPart ? toSegs(dirPart) : [...cwd];
+    if (!nodeAt(segs)?.dir) return [];
+    const showHidden = cur.slice(i + 1).startsWith(".");
+    return children(segs)
+      .filter((e) => (!dirsOnly || e.dir) && (showHidden || !e.hidden))
+      .map((e) => dirPart + e.name + (e.dir ? "/" : ""));
+  }
+
   function candidates(words) {
     if (words.length <= 1) return Object.keys(COMMANDS).filter((c) => !["vi", "nano", "emacs", "logout", "copy-email"].includes(c));
     const cmd = words[0];
+    const cur = words[words.length - 1];
     const slugs = projects.map((p) => p.slug);
-    const posts = writeups.map((w) => w.slug);
-    const files = Object.keys(SECTION_FILES);
     switch (cmd) {
       case "cd":
+        return [...pathCandidates(cur, true), "..", "~"];
       case "ls":
-        return ["projects/", "writeups/", "about", "experience", "roadmap", "skills", "contact", "~"];
       case "cat":
-        return [...files, ...slugs.map((s) => "projects/" + s), ...posts.map((s) => "writeups/" + s + ".md")];
+        return pathCandidates(cur);
       case "open":
-        return [...slugs, ...posts];
+        return [...pathCandidates(cur), ...slugs, ...published.map((w) => w.slug), "about", "experience", "roadmap", "skills", "contact"];
       case "man":
         return [...slugs, "keys"];
       case "theme":
@@ -452,7 +616,7 @@
     const val = input.value;
     const words = val.split(/\s+/);
     const cur = words[words.length - 1];
-    const opts = candidates(words).filter((c) => c.startsWith(cur));
+    const opts = [...new Set(candidates(words))].filter((c) => c.startsWith(cur));
     if (!opts.length) return;
     if (opts.length === 1) {
       words[words.length - 1] = opts[0] + (words.length === 1 ? " " : "");
@@ -599,7 +763,7 @@
     restart() {
       if (finishBoot) finishBoot();
       out.innerHTML = "";
-      setCwd("~");
+      setCwd([]);
       boot();
     },
     exec: execute,
